@@ -21,7 +21,7 @@ The diagnostics supplied with the collection contain all requested R3, M4, M8, M
 
 | Figure | Source-data state | Current archived source | Remaining action |
 |---|---|---|---|
-| Fig. 1 | Compact export utility ready | `derived_data/Fig1_reference_annotation_metrics.csv`; production runner; `scripts/archive/90_export_compact_archive_sources.py` | Run the compact exporter once and add `Fig1_reference_trajectories.csv.gz`; add the authoritative script-27 map builder from the curated figure-source package. |
+| Fig. 1 | Compact export utility ready | `derived_data/Fig1_reference_annotation_metrics.csv`; production runner; `scripts/archive/90_export_compact_archive_sources.py` | Add `archive_sources/Fig1_reference_plot_source.csv.gz` from the final upload bundle; it contains the 250 plotted trajectories per configuration plus all final positions. Add the authoritative script-27 map builder from the same bundle. |
 | Fig. 2 | Complete | `Figure2_ensemble_absolute_metrics.csv`, `Figure2_paired_A90_changes.csv`, and `scripts/figures/build_Fig2_ensemble_process_attribution.py` | None. |
 | Fig. 3 | Diagnostics verified in curated package | `Fig3_revised_vertical_depth_ensemble.csv`; M9 analysis script | Add `Fig3_revised_vertical_timeseries.csv`, M9 per-seed/summary outputs, and the script-77 figure builder from the curated package. |
 | Fig. 4 | Figure-source table complete; builder verified | `Fig4_revised_C3_fate_timeseries.csv` | Add the script-85 figure builder from the curated package. |
@@ -34,7 +34,7 @@ The diagnostics supplied with the collection contain all requested R3, M4, M8, M
 |---|---|---|---|
 | Fig. S1 | Diagnostics verified in curated package | R3 audit script | Add well-mixed summary, histogram and diffusivity-profile CSVs from the curated package. |
 | Fig. S2 | Diagnostics verified in curated package | R3 audit script | Add wind-threshold occupancy and lag-correlation CSVs plus `Fig3_revised_vertical_timeseries.csv` from the curated package. |
-| Fig. S3 | Summary/variability sources complete; compact exporter ready | `FigS3_oil_sensitivity_summary.csv`, `FigS3_oil_property_summary.csv`, `FigS3_reference_variability.csv`; M10 analysis script; compact exporter | Add M10 properties/metrics CSVs from the curated package, then run the compact exporter to add `FigS3_per_element_surface_time.csv.gz` and `FigS3_reference_offsets.csv` for panels (c)–(d). |
+| Fig. S3 | Summary/variability sources complete; compact exporter ready | `FigS3_oil_sensitivity_summary.csv`, `FigS3_oil_property_summary.csv`, `FigS3_reference_variability.csv`; M10 analysis script; compact exporter | Add M10 properties/metrics CSVs and `archive_sources/FigS3_per_element_surface_time.csv.gz` plus `archive_sources/FigS3_reference_offsets.csv` from the final upload bundle. |
 
 ## Raw NetCDF decision
 
