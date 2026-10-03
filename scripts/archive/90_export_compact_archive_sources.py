@@ -7,7 +7,7 @@ redraw (i) main-manuscript Fig. 1 and (ii) Supporting Fig. S3 panels (c)-(d).
 
 Outputs
 -------
-archive_sources/Fig1_reference_trajectories.csv.gz
+archive_sources/Fig1_reference_plot_source.csv.gz
 archive_sources/FigS3_per_element_surface_time.csv.gz
 archive_sources/FigS3_reference_offsets.csv
 
@@ -108,7 +108,7 @@ def export_fig1() -> Path:
                 "lat_deg_north": lat.reshape(-1),
             }))
     df = pd.concat(parts, ignore_index=True)
-    out = OUT / "Fig1_reference_trajectories.csv.gz"
+    out = OUT / "Fig1_reference_plot_source.csv.gz"
     df.to_csv(out, index=False, compression="gzip")
     return out
 
