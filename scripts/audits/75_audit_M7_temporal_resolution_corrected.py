@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 75: Reviewer #2 M7 temporal-resolution audit, corrected interpolation.
+Script 75: TEMPORAL RESOLUTION temporal-resolution audit, corrected interpolation.
 
 Purpose
 -------
@@ -17,12 +17,12 @@ inertial, or other sub-daily current variability.
 
 Outputs
 -------
-diagnostics/reviewer2/M7_temporal_resolution_audit.csv
-diagnostics/reviewer2/M7_temporal_resolution_audit.txt
-diagnostics/reviewer2/M7_temporal_resolution_audit.json
-figures/M7_temporal_resolution_diagnostic.png
-figures/M7_temporal_resolution_diagnostic.pdf
-figures/M7_temporal_resolution_diagnostic.svg
+diagnostics/validation/temporal_resolution_audit.csv
+diagnostics/validation/temporal_resolution_audit.txt
+diagnostics/validation/temporal_resolution_audit.json
+figures/temporal_resolution_diagnostic.png
+figures/temporal_resolution_diagnostic.pdf
+figures/temporal_resolution_diagnostic.svg
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-DIAG = ROOT / "diagnostics" / "reviewer2"
+DIAG = ROOT / "diagnostics" / "validation"
 FIGDIR = ROOT / "figures"
 DIAG.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
@@ -274,7 +274,7 @@ def main():
         })
 
     pd.DataFrame(rows).to_csv(
-        DIAG / "M7_temporal_resolution_audit_v2.csv", index=False
+        DIAG / "temporal_resolution_check.csv", index=False
     )
 
     summary = {
@@ -326,11 +326,11 @@ def main():
         },
     }
 
-    json_path = DIAG / "M7_temporal_resolution_audit_v2.json"
+    json_path = DIAG / "temporal_resolution_check.json"
     json_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
     lines = [
-        "REVIEWER #2 M7 — TEMPORAL-RESOLUTION AUDIT",
+        "TEMPORAL RESOLUTION — TEMPORAL-RESOLUTION CHECK",
         "=" * 94,
         f"Window: {START} to {END}",
         "",
@@ -393,7 +393,7 @@ def main():
         "This is a forcing-resolution limitation on the C0 -> C1 attribution.",
     ])
 
-    txt_path = DIAG / "M7_temporal_resolution_audit_v2.txt"
+    txt_path = DIAG / "temporal_resolution_check.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     fig, axes = plt.subplots(2, 1, figsize=(9.5, 7.2))
@@ -420,9 +420,9 @@ def main():
 
     plt.tight_layout()
 
-    png = FIGDIR / "M7_temporal_resolution_diagnostic_v2.png"
-    pdf = FIGDIR / "M7_temporal_resolution_diagnostic_v2.pdf"
-    svg = FIGDIR / "M7_temporal_resolution_diagnostic_v2.svg"
+    png = FIGDIR / "temporal_resolution_diagnostic_v2.png"
+    pdf = FIGDIR / "temporal_resolution_diagnostic_v2.pdf"
+    svg = FIGDIR / "temporal_resolution_diagnostic_v2.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
