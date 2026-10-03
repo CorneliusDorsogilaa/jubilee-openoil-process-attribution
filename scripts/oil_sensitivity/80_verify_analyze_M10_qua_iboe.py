@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 80: Verify and analyze the M10 Qua Iboe lighter-oil sensitivity.
+Script 80: Verify and analyze the OIL SENSITIVITY Qua Iboe lighter-oil sensitivity.
 
 Purpose
 -------
@@ -87,7 +87,7 @@ def main():
     patch_workflow(ANALYZE_SOURCE, ANALYZE_PATCHED)
 
     print("=" * 92)
-    print("REVIEWER #2 M10 — QUA IBOE METADATA VERIFICATION")
+    print("OIL SENSITIVITY — QUA IBOE METADATA VERIFICATION")
     print("=" * 92)
     print(f"Input C2: {expected[0].relative_to(ROOT)}")
     print(f"Input C3: {expected[1].relative_to(ROOT)}")
@@ -97,7 +97,7 @@ def main():
 
     print("")
     print("=" * 92)
-    print("REVIEWER #2 M10 — QUA IBOE SENSITIVITY ANALYSIS")
+    print("OIL SENSITIVITY — QUA IBOE SENSITIVITY ANALYSIS")
     print("=" * 92)
     print(f"Analyzer: {ANALYZE_PATCHED.relative_to(ROOT)}")
     print("")
@@ -109,7 +109,7 @@ def main():
     print("=" * 92)
     print("Qua Iboe lighter-side metadata verification and analysis completed.")
     print("Next step: combine Qua Iboe, Bonny Light, and Cabinda Blend into the")
-    print("final two-sided M10 sensitivity table/figure.")
+    print("final two-sided OIL SENSITIVITY sensitivity table/figure.")
 
 
 if __name__ == "__main__":
