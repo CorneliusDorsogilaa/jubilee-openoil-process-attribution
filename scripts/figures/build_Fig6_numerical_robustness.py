@@ -19,10 +19,10 @@ using the same A90 estimator and fs definition as the production analysis.
 
 Outputs
 -------
-figures_revised/Fig6_revised_numerical_robustness_source.csv
-figures_revised/Fig6_revised_numerical_robustness.pdf
-figures_revised/Fig6_revised_numerical_robustness.png
-figures_revised/Fig6_revised_numerical_robustness.svg
+figures/Fig6_numerical_robustness_source.csv
+figures/Fig6_numerical_robustness.pdf
+figures/Fig6_numerical_robustness.png
+figures/Fig6_numerical_robustness.svg
 """
 
 from __future__ import annotations
@@ -40,13 +40,13 @@ from scipy.stats import t as student_t
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parents[1] if SCRIPT_DIR.name.lower() == "figures" else (SCRIPT_DIR.parent if SCRIPT_DIR.name.lower() == "scripts" else SCRIPT_DIR)
-OUTDIR = ROOT / "figures_revised"
+OUTDIR = ROOT / "figures"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-CSV_OUT = OUTDIR / "Fig6_revised_numerical_robustness_source.csv"
-PDF_OUT = OUTDIR / "Fig6_revised_numerical_robustness.pdf"
-PNG_OUT = OUTDIR / "Fig6_revised_numerical_robustness.png"
-SVG_OUT = OUTDIR / "Fig6_revised_numerical_robustness.svg"
+CSV_OUT = OUTDIR / "Fig6_numerical_robustness_source.csv"
+PDF_OUT = OUTDIR / "Fig6_numerical_robustness.pdf"
+PNG_OUT = OUTDIR / "Fig6_numerical_robustness.png"
+SVG_OUT = OUTDIR / "Fig6_numerical_robustness.svg"
 
 RELEASE_LON = -2.89000
 RELEASE_LAT = 4.60000
@@ -170,7 +170,7 @@ def candidate_score(path: Path):
         score += 50
     if "convergence" in s:
         score += 50
-    if "reviewer" in s:
+    if "validation" in s:
         score += 20
     if "m4" in s:
         score += 20
@@ -181,19 +181,19 @@ def candidate_score(path: Path):
 
 def find_ensemble_files(N):
     """
-    Robust discovery for the M4 particle-count ensemble.
+    Robust discovery for the particle-count ensemble.
 
     Earlier runs used several directory / filename conventions, so do not
     assume that N is encoded in the filename. Instead:
 
     1. scan all C3-like NetCDF files under outputs/,
-    2. require one of the 20 reviewer seeds,
+    2. require one of the 20 ensemble seeds,
     3. open the file and confirm trajectory count == requested N,
-    4. prefer paths containing particle/convergence/M4/reviewer terms,
+    4. prefer paths containing particle/convergence/particle-count/validation terms,
     5. retain one file per seed.
 
-    For N=1000, a reviewer-seed-ensemble C3 file is scientifically equivalent
-    if the dedicated M4 path is absent, because the production settings are
+    For N=1000, a seed-ensemble C3 file is scientifically equivalent
+    if the dedicated particle-count path is absent, because the production settings are
     the same (C3, dt=1800 s, Kh=100 m2/s).
     """
     outputs = ROOT / "outputs"
@@ -271,7 +271,7 @@ def find_ensemble_files(N):
         raise RuntimeError(
             f"Expected 20 unique C3 files for N={N}, found {len(files)}.\n"
             "The script now searches by the ACTUAL NetCDF trajectory count, not "
-            "by filename. If this still fails, the local M4 ensemble files are "
+            "by filename. If this still fails, the local particle-count ensemble files are "
             "not all present under outputs/."
         )
 
