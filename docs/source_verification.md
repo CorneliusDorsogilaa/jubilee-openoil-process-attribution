@@ -1,10 +1,10 @@
-# Source verification for manuscript revision
+# Source verification
 
 This note records the external sources used to close the final manuscript sourcing checks. These checks change citation support and descriptive wording only; they do not change any OpenDrift/OpenOil result.
 
 ## Jubilee crude property basis
 
-Primary reference for the revised manuscript:
+Primary reference for the manuscript:
 
 **Tullow Oil plc (2019), Jubilee Crude Assay 2019, assay JUBILEE2019.**
 
@@ -14,7 +14,7 @@ Values used in the manuscript:
 - Kinematic viscosity at 40 °C: 4.6 cSt
 - Pour point: 3 °C
 
-The earlier Appenteng et al. (2013) characterization is retained as an independent historical measurement, not as the primary property source.
+The Appenteng et al. (2013) characterization is retained as an independent historical measurement, not as the primary property source.
 
 ## Jubilee stochastic OILMAP precedent
 
