@@ -2,14 +2,22 @@
 
 Do **not** tag the final `v1.0.0-paper-submission` release until these are complete.
 
-1. Update manuscript/SI timestep wording everywhere: C3 timestep screen, N=2000, Kh=100 m² s⁻¹, 5/10/15/30 min, three seeds. Production remains N=1000.
-2. Regenerate or relabel manuscript Fig. 6 so panel (a) matches the verified timestep campaign description.
-3. Replace Jubilee property sourcing with the final verified primary-source wording selected for the paper; keep the table temperature bases explicit.
-4. Use the 2009 ERM/Tullow Jubilee Phase 1 EIS as the direct source for the 500-run stochastic OILMAP statement if that claim remains.
-5. Keep Carvalho et al. (2025) only for the specific oil-property / evaporation sensitivity claim it actually supports.
-6. Replace this staging `environment.yml` with the exact final environment export or add an exact package lock file.
-7. Add the complete final figure-source CSV inventory and any small, redistribution-safe diagnostic outputs.
-8. Decide whether raw OpenOil result NetCDFs belong in Zenodo (recommended if size/licensing permit); do not put forcing products in GitHub.
-9. Recompute `metadata/file_manifest_sha256.csv` after all files are final.
-10. Change `CITATION.cff` version from 0.9.0 to 1.0.0 and create GitHub release `v1.0.0-paper-submission`.
-11. Archive that release in Zenodo, obtain DOI, then insert DOI into the manuscript and SI.
+## Closed
+
+- [x] Timestep description corrected everywhere to the verified C3 screen at **N = 2000**, **Kh = 100 m² s⁻¹**, 5/10/15/30 min, three seeds; production remains **N = 1000**.
+- [x] Main-manuscript Fig. 6 caption corrected to describe the preliminary three-seed timestep screen.
+- [x] Jubilee property sourcing upgraded to the official **Tullow 2019 Jubilee assay** as the primary reference; Appenteng et al. (2013) retained only as an earlier independent characterization.
+- [x] Stochastic OILMAP precedent sourced directly to the **2009 Jubilee Field Phase 1 EIS**, which documents 500 independent simulations per scenario.
+- [x] Carvalho et al. (2025) narrowed to the specific API-gravity / evaporation sensitivity claim it supports.
+- [x] Mixed-unit temperature wording corrected so the archived final Kelvin-scale record is described as an archive property rather than a general OpenDrift behavior.
+- [x] Public GitHub repository created under **CorneliusDorsogilaa**.
+
+## Still required before Zenodo
+
+- [ ] Replace the staging `environment.yml` with an exact final environment export and add an explicit package lock.
+- [ ] Add the complete final figure-source CSV inventory and any small redistribution-safe diagnostic outputs.
+- [ ] Decide whether selected raw OpenOil result NetCDFs belong in Zenodo; do **not** redistribute ERA5 or GLORYS forcing products in GitHub.
+- [ ] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
+- [ ] Change `CITATION.cff` version from `0.9.0` to `1.0.0`.
+- [ ] Create GitHub release `v1.0.0-paper-submission`.
+- [ ] Enable the repository in Zenodo, archive the tagged release, obtain the DOI, and insert that DOI into the main manuscript and Supporting Information.
