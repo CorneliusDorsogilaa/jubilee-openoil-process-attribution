@@ -19,5 +19,6 @@ Do **not** tag the final `v1.0.0-paper-submission` release until these are compl
 - [x] Raw-output policy fixed: do **not** archive the large OpenOil NetCDFs. Archive compact figure-source exports plus run configuration and scripts; do not redistribute ERA5 or GLORYS forcing products.
 - [x] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
 - [x] Change `CITATION.cff` version from `0.9.0` to `1.0.0`.
-- [ ] Create GitHub release `v1.0.0-paper-submission`.
-- [ ] Enable the repository in Zenodo, archive the tagged release, obtain the DOI, and insert that DOI into the main manuscript and Supporting Information.
+- [ ] Connect the GitHub account in Zenodo and enable `jubilee-openoil-process-attribution` **before** publishing the GitHub release.
+- [ ] Create GitHub release `v1.0.0-paper-submission` from the frozen `main` commit.
+- [ ] Wait for Zenodo to ingest the enabled release, obtain the DOI, and insert that DOI into the main manuscript and Supporting Information.
