@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-77_build_revised_Fig3_vertical_exchange.py
+build_Fig3_vertical_exchange.py
 
 Build Figure 3 for the Jubilee OpenOil manuscript.
 
