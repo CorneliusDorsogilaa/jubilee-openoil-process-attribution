@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-88_build_revised_Fig6_numerical_robustness.py
+build_Fig6_numerical_robustness.py
 
 Rebuild Fig. 6 without the outdated seed-CV panels or the phrase
 "minimum converged particle count."
@@ -171,8 +171,6 @@ def candidate_score(path: Path):
     if "convergence" in s:
         score += 50
     if "validation" in s:
-        score += 20
-    if "m4" in s:
         score += 20
     if "production" in s:
         score -= 10
