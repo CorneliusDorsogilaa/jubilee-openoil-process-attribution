@@ -115,7 +115,7 @@ The paper compares Qua Iboe (AD01483), Bonny Light (AD01440), and Cabinda Blend 
 
 ## Derived data
 
-The `derived_data/` directory contains stable source tables already used for manuscript diagnostics. Final release `v1.0.0-paper-submission` will contain the complete submission-matched figure-source inventory and SHA256 manifest.
+The `derived_data/` directory contains stable source tables used for manuscript diagnostics. A machine-readable figure-to-source map is stored in `metadata/figure_source_inventory.csv`, with a human-readable audit in `docs/figure_source_inventory.md`. The remaining figure-source files identified there will be added before the submission-matched SHA256 manifest and `v1.0.0-paper-submission` release are frozen.
 
 ## Environment
 
