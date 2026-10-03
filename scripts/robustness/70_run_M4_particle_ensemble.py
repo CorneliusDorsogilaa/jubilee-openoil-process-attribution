@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 70: Reviewer #2 M4 particle-count ensemble runs.
+Script 70: PARTICLE COUNT particle-count ensemble runs.
 
 Purpose
 -------
@@ -14,10 +14,10 @@ New runs:
     N = 500, 2000, 4000
     seeds = 20220901 ... 20220920
 
-The existing 20-seed N=1000 reviewer ensemble is intentionally NOT rerun.
+The existing 20-seed N=1000 ensemble is intentionally NOT rerun.
 A later analysis script will combine:
-    N=500/2000/4000 from outputs/reviewer_particle_ensemble/
-    N=1000 from outputs/reviewer_seed_ensemble/
+    N=500/2000/4000 from outputs/particle_count_ensemble/
+    N=1000 from outputs/seed_ensemble/
 
 Implementation
 --------------
@@ -27,9 +27,9 @@ and MASTER_SEED, and calls its authoritative C3 worker_run().
 
 Outputs
 -------
-outputs/reviewer_particle_ensemble/*.nc
-diagnostics/reviewer2/M4_particle_ensemble_run_summary.json
-diagnostics/reviewer2/M4_particle_ensemble_run_summary.txt
+outputs/particle_count_ensemble/*.nc
+diagnostics/validation/particle_count_ensemble_run_summary.json
+diagnostics/validation/particle_count_ensemble_run_summary.txt
 """
 
 from __future__ import annotations
@@ -46,8 +46,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT25 = ROOT / "scripts" / "25_run_production_scenarios.py"
 
-OUTDIR = ROOT / "outputs" / "reviewer_particle_ensemble"
-DIAGDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "outputs" / "particle_count_ensemble"
+DIAGDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 DIAGDIR.mkdir(parents=True, exist_ok=True)
 
@@ -74,12 +74,12 @@ def load_script25():
 def worker(n: int, seed: int, outfile: Path) -> int:
     prod = load_script25()
 
-    # Override ONLY the numerical ensemble dimensions requested for M4.
+    # Override ONLY the numerical ensemble dimensions requested for PARTICLE COUNT.
     prod.N_ELEMENTS = int(n)
     prod.MASTER_SEED = int(seed)
 
     print(
-        f"M4 WORKER | N={n} | seed={seed} | outfile={outfile.name}",
+        f"PARTICLE COUNT WORKER | N={n} | seed={seed} | outfile={outfile.name}",
         flush=True,
     )
     return prod.worker_run(SCENARIO, outfile)
@@ -110,7 +110,7 @@ def main():
 
     summary = {
         "generated_utc": run_tag,
-        "purpose": "Reviewer #2 M4 ensemble-based particle-count convergence",
+        "purpose": "particle-count ensemble-based particle-count convergence",
         "scenario": SCENARIO,
         "fixed_settings": {
             "calculation_timestep_seconds": DT_SECONDS,
@@ -123,8 +123,8 @@ def main():
         "overall_status": "RUNNING",
     }
 
-    summary_json = DIAGDIR / "M4_particle_ensemble_run_summary.json"
-    summary_txt = DIAGDIR / "M4_particle_ensemble_run_summary.txt"
+    summary_json = DIAGDIR / "particle_count_ensemble_run_summary.json"
+    summary_txt = DIAGDIR / "particle_count_ensemble_run_summary.txt"
 
     def save():
         summary_json.write_text(
@@ -132,12 +132,12 @@ def main():
             encoding="utf-8",
         )
         lines = [
-            "REVIEWER #2 M4 — PARTICLE-COUNT ENSEMBLE RUN SUMMARY",
+            "PARTICLE COUNT — PARTICLE-COUNT ENSEMBLE RUN SUMMARY",
             "=" * 84,
             f"Generated UTC: {summary['generated_utc']}",
             f"Scenario: {SCENARIO}",
             f"New N values: {PARTICLE_COUNTS}",
-            "Reused N=1000: existing 20-seed reviewer ensemble",
+            "Reused N=1000: existing 20-seed ensemble",
             f"Seeds: {SEEDS[0]} ... {SEEDS[-1]} ({len(SEEDS)} seeds)",
             f"Overall status: {summary['overall_status']}",
             "",
@@ -235,7 +235,7 @@ def main():
                 summary["overall_status"] = "FAIL"
                 save()
                 raise RuntimeError(
-                    f"M4 worker failed: N={n}, seed={seed}, "
+                    f"particle-count worker failed: N={n}, seed={seed}, "
                     f"returncode={completed.returncode}"
                 )
 
@@ -253,7 +253,7 @@ def main():
     save()
 
     print("\n" + "=" * 84)
-    print("M4 PARTICLE-COUNT ENSEMBLE: PASS")
+    print("PARTICLE COUNT PARTICLE-COUNT ENSEMBLE: PASS")
     print(f"Summary: {summary_json.relative_to(ROOT)}")
     print(f"Text   : {summary_txt.relative_to(ROOT)}")
     print("Next: run the ensemble convergence analysis script.")
