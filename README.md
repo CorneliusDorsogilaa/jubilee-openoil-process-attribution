@@ -133,3 +133,8 @@ A `CITATION.cff` file is included. The permanent Zenodo DOI will be added after 
 ## License
 
 Code in this repository is released under the MIT License. Derived tables created by the authors may be reused with attribution; third-party environmental data and software remain under their original licenses.
+
+
+## Raw-output archive policy
+
+The public release is intentionally source-table based rather than a bulk dump of OpenOil NetCDF outputs. The repository archives the run configuration, authoritative analysis code, per-seed/diagnostic tables, and compact trajectory/per-element exports sufficient to redraw the submitted figures. Large raw OpenOil NetCDF outputs are not planned for the public Zenodo release. A full model rerun requires the documented ERA5 and GLORYS forcing products, which remain under their providers' access and licensing terms.
