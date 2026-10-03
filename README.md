@@ -36,6 +36,17 @@ Production calculations use `N = 1000`, a 30 min transport timestep, hourly outp
 - OpenOil's NOAA evaporation routine stops further evaporation once the youngest active surface element exceeds 24 h of age. For the 6 h release, cumulative evaporation therefore plateaus after approximately 30 h.
 - Bonny Light is an analogue used for executable OpenOil weathering, not an exact Jubilee crude assay.
 
+
+## Verified source basis
+
+The manuscript source audit is now locked on three points that do not change any model result:
+
+- The primary Jubilee crude property reference is the official **Tullow 2019 Jubilee assay** (37.41 °API, density 837.3 kg m⁻³ at 15 °C, kinematic viscosity 4.6 cSt at 40 °C, pour point 3 °C). Appenteng et al. (2013) is retained only as an earlier independent characterization showing that reported bulk properties vary with the sampled crude composite.
+- The direct source for the Jubilee stochastic OILMAP precedent is the **2009 Jubilee Field Phase 1 EIS**, which documents 500 independent simulations with different start times for each spill scenario.
+- Carvalho et al. (2025) is used only for the narrower sensitivity claim that API-gravity changes had limited influence on advective displacement but materially affected evaporation in MEDSLIK-II.
+
+A concise audit trail is provided in `docs/source_verification.md`.
+
 ## Repository layout
 
 ```text
