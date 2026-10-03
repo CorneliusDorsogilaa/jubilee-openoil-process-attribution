@@ -115,16 +115,17 @@ The paper compares Qua Iboe (AD01483), Bonny Light (AD01440), and Cabinda Blend 
 
 ## Derived data
 
-The `derived_data/` directory contains stable source tables used for manuscript diagnostics. A machine-readable figure-to-source map is stored in `metadata/figure_source_inventory.csv`, with a human-readable audit in `docs/figure_source_inventory.md`. The remaining figure-source files identified there will be added before the submission-matched SHA256 manifest and `v1.0.0-paper-submission` release are frozen.
+The `derived_data/` directory contains the frozen source tables used for the submitted manuscript diagnostics. Compact trajectory and per-element sources that replace redistribution of selected raw NetCDFs are stored in `archive_sources/`. A machine-readable figure-to-source map is stored in `metadata/figure_source_inventory.csv`, with a human-readable audit in `docs/figure_source_inventory.md`. The final figure-source package is complete; the SHA256 manifest is regenerated only after all release files are frozen.
 
 ## Environment
 
-Two environment records are supplied:
+Three environment records are supplied:
 
 - `environment.yml` is the portable recreation file with the principal runtime dependencies pinned.
-- `environment_exact.yml` is the final executed `jubilee-openoil-g2` environment snapshot, including Python 3.11.16 and OpenDrift 1.14.12. The machine-specific Conda `prefix:` line was removed before publication because it points only to the original local installation path.
+- `environment_exact.yml` is the final executed `jubilee-openoil-g2` Conda environment snapshot, including Python 3.11.16 and OpenDrift 1.14.12. The machine-specific Conda `prefix:` line was removed before publication because it points only to the original local installation path.
+- `requirements_lock.txt` lists the pinned pip-installed packages extracted from the exact environment for users who need a pip-oriented package record.
 
-Together these files document both an accessible recreation route and the exact package versions present in the final analysis environment.
+For the closest recreation of the executed environment, use `environment_exact.yml`; `environment.yml` is the more portable starting point.
 
 ## Citation
 
