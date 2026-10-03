@@ -119,7 +119,12 @@ The `derived_data/` directory contains stable source tables already used for man
 
 ## Environment
 
-A minimal environment template is supplied in `environment.yml`. Before the Zenodo release, it should be replaced or supplemented with the exact export from the `jubilee-openoil-g2` runtime used for the final analyses.
+Two environment records are supplied:
+
+- `environment.yml` is the portable recreation file with the principal runtime dependencies pinned.
+- `environment_exact.yml` is the final executed `jubilee-openoil-g2` environment snapshot, including Python 3.11.16 and OpenDrift 1.14.12. The machine-specific Conda `prefix:` line was removed before publication because it points only to the original local installation path.
+
+Together these files document both an accessible recreation route and the exact package versions present in the final analysis environment.
 
 ## Citation
 
