@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 58: Extract ADIOS oil properties for Reviewer #2 (M10).
+Script 58: Extract ADIOS oil properties for the oil-sensitivity analysis.
 
 Purpose
 -------
@@ -14,10 +14,10 @@ This script does NOT alter or rerun the production simulations.
 
 Outputs
 -------
-diagnostics/reviewer2/oil_properties_ADIOS.txt
-diagnostics/reviewer2/oil_properties_ADIOS.json
-diagnostics/reviewer2/AD01440_raw_oil_record.json
-diagnostics/reviewer2/AD01442_raw_oil_record.json
+diagnostics/validation/oil_properties_ADIOS.txt
+diagnostics/validation/oil_properties_ADIOS.json
+diagnostics/validation/AD01440_raw_oil_record.json
+diagnostics/validation/AD01442_raw_oil_record.json
 
 The outputs are intended for the manuscript/SI property-comparison table
 and for checking the maximum emulsion-water fraction (Y_max).
@@ -39,7 +39,7 @@ from adios_db.computation.physical_properties import Density, KinematicViscosity
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 OILS = {
@@ -192,7 +192,7 @@ def extract_one(oil_id: str) -> dict[str, Any]:
         "gnome_oil": raw_gnome,
     }
 
-    # Search the raw record for fields requested by Reviewer #2.
+    # Search the raw record for fields used in the oil-property comparison.
     result["raw_record_key_hits"] = {
         "api": to_jsonable(search_keys(raw_oil, ("api",))),
         "density": to_jsonable(search_keys(raw_oil, ("density",))),
@@ -230,7 +230,7 @@ def main():
     bundle = {
         "generated_utc": generated_utc,
         "opendrift_version": od_version,
-        "purpose": "Reviewer #2 M10 oil-property comparison and Y_max check",
+        "purpose": "oil-property comparison and Y_max check",
         "oils": {},
     }
 
@@ -245,7 +245,7 @@ def main():
     )
 
     lines = []
-    lines.append("REVIEWER #2 M10 — ADIOS OIL PROPERTY EXTRACTION")
+    lines.append("ADIOS OIL PROPERTY EXTRACTION")
     lines.append("=" * 72)
     lines.append(f"Generated UTC: {generated_utc}")
     lines.append(f"OpenDrift version: {od_version}")
@@ -294,7 +294,7 @@ def main():
 
         lines.append("")
         lines.append(
-            f"Raw record saved to diagnostics/reviewer2/"
+            f"Raw record saved to diagnostics/validation/"
             f"{oil_id}_raw_oil_record.json"
         )
         lines.append("")
