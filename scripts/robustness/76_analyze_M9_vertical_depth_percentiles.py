@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Script 76: Reviewer #2 M9 robust vertical-depth statistics.
+Script 76: VERTICAL DEPTH robust vertical-depth statistics.
 
 Purpose
 -------
 Replace the unstable single maximum vertical excursion with ensemble-based
-upper-tail statistics from the completed 20-seed reviewer ensemble.
+upper-tail statistics from the completed 20-seed ensemble.
 
 Scenarios analyzed
 ------------------
@@ -28,14 +28,14 @@ Across the 20 seeds:
 
 Outputs
 -------
-diagnostics/reviewer2/M9_vertical_depth_per_seed.csv
-diagnostics/reviewer2/M9_vertical_depth_summary.csv
-diagnostics/reviewer2/M9_vertical_depth_summary.json
-diagnostics/reviewer2/M9_vertical_depth_summary.txt
+diagnostics/validation/vertical_depth_per_seed.csv
+diagnostics/validation/vertical_depth_summary.csv
+diagnostics/validation/vertical_depth_summary.json
+diagnostics/validation/vertical_depth_summary.txt
 
-figures/M9_vertical_depth_percentiles.png
-figures/M9_vertical_depth_percentiles.pdf
-figures/M9_vertical_depth_percentiles.svg
+figures/vertical_depth_percentiles.png
+figures/vertical_depth_percentiles.pdf
+figures/vertical_depth_percentiles.svg
 """
 
 from __future__ import annotations
@@ -52,12 +52,12 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 FIGDIR = ROOT / "figures"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
 
-ENSEMBLE_DIR = ROOT / "outputs" / "reviewer_seed_ensemble"
+ENSEMBLE_DIR = ROOT / "outputs" / "seed_ensemble"
 
 SCENARIOS = {
     "C2": "C2_Exchange",
@@ -199,7 +199,7 @@ def main():
 
     df = pd.DataFrame(records)
 
-    per_seed_csv = OUTDIR / "M9_vertical_depth_per_seed.csv"
+    per_seed_csv = OUTDIR / "vertical_depth_per_seed.csv"
     df.to_csv(per_seed_csv, index=False)
 
     metric_labels = {
@@ -235,7 +235,7 @@ def main():
             })
 
     summary_df = pd.DataFrame(summary_rows)
-    summary_csv = OUTDIR / "M9_vertical_depth_summary.csv"
+    summary_csv = OUTDIR / "vertical_depth_summary.csv"
     summary_df.to_csv(summary_csv, index=False)
 
     bundle = {
@@ -256,14 +256,14 @@ def main():
         "summary": summary_json,
     }
 
-    json_path = OUTDIR / "M9_vertical_depth_summary.json"
+    json_path = OUTDIR / "vertical_depth_summary.json"
     json_path.write_text(
         json.dumps(bundle, indent=2) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M9 — ROBUST VERTICAL-DEPTH STATISTICS",
+        "VERTICAL DEPTH — ROBUST VERTICAL-DEPTH STATISTICS",
         "=" * 94,
         "Definition: for each trajectory, calculate its maximum depth reached over",
         "the 48 h run, then take p95/p99 across trajectories. Repeat for 20 seeds.",
@@ -292,7 +292,7 @@ def main():
         "This is far less sensitive to a single extreme particle-time realization.",
     ])
 
-    txt_path = OUTDIR / "M9_vertical_depth_summary.txt"
+    txt_path = OUTDIR / "vertical_depth_summary.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     # Figure: per-seed p95/p99 distributions and unstable absolute maximum.
@@ -331,9 +331,9 @@ def main():
 
     plt.tight_layout()
 
-    png = FIGDIR / "M9_vertical_depth_percentiles.png"
-    pdf = FIGDIR / "M9_vertical_depth_percentiles.pdf"
-    svg = FIGDIR / "M9_vertical_depth_percentiles.svg"
+    png = FIGDIR / "vertical_depth_percentiles.png"
+    pdf = FIGDIR / "vertical_depth_percentiles.pdf"
+    svg = FIGDIR / "vertical_depth_percentiles.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
