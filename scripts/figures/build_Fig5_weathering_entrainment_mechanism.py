@@ -3,7 +3,7 @@
 87_build_revised_Fig5_weathering_entrainment_mechanism.py
 
 Rebuild the manuscript Fig. 5 mechanism figure from the authoritative
-Reviewer #2 M8 reconstruction outputs.
+Internal validation mechanism reconstruction outputs.
 
 Scientific chain
 ----------------
@@ -18,20 +18,18 @@ occupancy itself is already shown in Fig. 3 and is therefore not duplicated.
 
 Inputs
 ------
-diagnostics/reviewer2/M8_mechanism_timeseries.csv
-diagnostics/reviewer2/M8_mechanism_summary.json
+diagnostics/validation/weathering_entrainment_mechanism_timeseries.csv
 
 Outputs
 -------
-figures_revised/Fig5_revised_weathering_entrainment_mechanism.csv
-figures_revised/Fig5_revised_weathering_entrainment_mechanism.pdf
-figures_revised/Fig5_revised_weathering_entrainment_mechanism.png
-figures_revised/Fig5_revised_weathering_entrainment_mechanism.svg
+figures/Fig5_weathering_entrainment_mechanism.csv
+figures/Fig5_weathering_entrainment_mechanism.pdf
+figures/Fig5_weathering_entrainment_mechanism.png
+figures/Fig5_weathering_entrainment_mechanism.svg
 """
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import numpy as np
@@ -42,24 +40,23 @@ import matplotlib.pyplot as plt
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parents[1] if SCRIPT_DIR.name.lower() == "figures" else (SCRIPT_DIR.parent if SCRIPT_DIR.name.lower() == "scripts" else SCRIPT_DIR)
 
-INDIR = ROOT / "diagnostics" / "reviewer2"
-OUTDIR = ROOT / "figures_revised"
+INDIR = ROOT / "diagnostics" / "validation"
+OUTDIR = ROOT / "figures"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-SRC_CSV = INDIR / "M8_mechanism_timeseries.csv"
-SRC_JSON = INDIR / "M8_mechanism_summary.json"
+SRC_CSV = INDIR / "weathering_entrainment_mechanism_timeseries.csv"
 
-CSV_OUT = OUTDIR / "Fig5_revised_weathering_entrainment_mechanism.csv"
-PDF_OUT = OUTDIR / "Fig5_revised_weathering_entrainment_mechanism.pdf"
-PNG_OUT = OUTDIR / "Fig5_revised_weathering_entrainment_mechanism.png"
-SVG_OUT = OUTDIR / "Fig5_revised_weathering_entrainment_mechanism.svg"
+CSV_OUT = OUTDIR / "Fig5_weathering_entrainment_mechanism.csv"
+PDF_OUT = OUTDIR / "Fig5_weathering_entrainment_mechanism.pdf"
+PNG_OUT = OUTDIR / "Fig5_weathering_entrainment_mechanism.png"
+SVG_OUT = OUTDIR / "Fig5_weathering_entrainment_mechanism.svg"
 
 
 def require(path: Path):
     if not path.exists():
         raise FileNotFoundError(
             f"Required input not found:\n  {path}\n\n"
-            "Run the M8 reconstruction first (script 62) in the Jubilee OpenDrift environment."
+            "Run the mechanism reconstruction first (script 62) in the Jubilee OpenDrift environment."
         )
 
 
@@ -76,10 +73,8 @@ def ratio(df: pd.DataFrame, col: str) -> float:
 
 def main():
     require(SRC_CSV)
-    require(SRC_JSON)
 
     df = pd.read_csv(SRC_CSV)
-    summary = json.loads(SRC_JSON.read_text(encoding="utf-8"))
 
     required = [
         "scenario",
@@ -91,7 +86,7 @@ def main():
     ]
     missing = [c for c in required if c not in df.columns]
     if missing:
-        raise KeyError(f"M8 CSV is missing required columns: {missing}")
+        raise KeyError(f"mechanism CSV is missing required columns: {missing}")
 
     # Export a clean figure-source CSV containing exactly the plotted variables.
     plot_df = df[
