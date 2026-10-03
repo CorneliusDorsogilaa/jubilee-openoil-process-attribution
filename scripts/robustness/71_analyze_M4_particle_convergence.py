@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 71: Reviewer #2 M4 ensemble-based particle-count convergence analysis.
+Script 71: PARTICLE COUNT ensemble-based particle-count convergence analysis.
 
 Purpose
 -------
@@ -11,10 +11,10 @@ with dt = 30 min and Kh = 100 m2/s.
 Data sources
 ------------
 N = 500, 2000, 4000:
-    outputs/reviewer_particle_ensemble/
+    outputs/particle_count_ensemble/
 
 N = 1000:
-    outputs/reviewer_seed_ensemble/
+    outputs/seed_ensemble/
 
 The script dynamically imports scripts/25_run_production_scenarios.py and
 uses its authoritative extract_metrics() function, so centroid displacement,
@@ -23,15 +23,15 @@ as in the production analysis.
 
 Outputs
 -------
-diagnostics/reviewer2/M4_particle_convergence_per_seed.csv
-diagnostics/reviewer2/M4_particle_convergence_summary.csv
-diagnostics/reviewer2/M4_particle_convergence_paired.csv
-diagnostics/reviewer2/M4_particle_convergence_summary.json
-diagnostics/reviewer2/M4_particle_convergence_summary.txt
+diagnostics/validation/particle_count_convergence_per_seed.csv
+diagnostics/validation/particle_count_convergence_summary.csv
+diagnostics/validation/particle_count_convergence_paired.csv
+diagnostics/validation/particle_count_convergence_summary.json
+diagnostics/validation/particle_count_convergence_summary.txt
 
-figures/M4_particle_convergence_ensemble.png
-figures/M4_particle_convergence_ensemble.pdf
-figures/M4_particle_convergence_ensemble.svg
+figures/particle_count_convergence_ensemble.png
+figures/particle_count_convergence_ensemble.pdf
+figures/particle_count_convergence_ensemble.svg
 """
 
 from __future__ import annotations
@@ -50,7 +50,7 @@ import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT25 = ROOT / "scripts" / "25_run_production_scenarios.py"
 
-DIAG = ROOT / "diagnostics" / "reviewer2"
+DIAG = ROOT / "diagnostics" / "validation"
 FIGDIR = ROOT / "figures"
 DIAG.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
@@ -94,8 +94,8 @@ def latest_by_seed(paths):
 def collect_files():
     files = {}
 
-    particle_dir = ROOT / "outputs" / "reviewer_particle_ensemble"
-    seed_dir = ROOT / "outputs" / "reviewer_seed_ensemble"
+    particle_dir = ROOT / "outputs" / "particle_count_ensemble"
+    seed_dir = ROOT / "outputs" / "seed_ensemble"
 
     for n in [500, 2000, 4000]:
         candidates = list(
@@ -181,7 +181,7 @@ def main():
             })
 
     df = pd.DataFrame(records)
-    per_seed_csv = DIAG / "M4_particle_convergence_per_seed.csv"
+    per_seed_csv = DIAG / "particle_count_convergence_per_seed.csv"
     df.to_csv(per_seed_csv, index=False)
 
     metrics = {
@@ -208,7 +208,7 @@ def main():
             })
 
     summary_df = pd.DataFrame(summary_rows)
-    summary_csv = DIAG / "M4_particle_convergence_summary.csv"
+    summary_csv = DIAG / "particle_count_convergence_summary.csv"
     summary_df.to_csv(summary_csv, index=False)
 
     paired_rows = []
@@ -262,7 +262,7 @@ def main():
             paired_json[pair_key][metric] = row
 
     paired_df = pd.DataFrame(paired_rows)
-    paired_csv = DIAG / "M4_particle_convergence_paired.csv"
+    paired_csv = DIAG / "particle_count_convergence_paired.csv"
     paired_df.to_csv(paired_csv, index=False)
 
     bundle = {
@@ -280,14 +280,14 @@ def main():
         "adjacent_N_comparisons": paired_json,
     }
 
-    json_path = DIAG / "M4_particle_convergence_summary.json"
+    json_path = DIAG / "particle_count_convergence_summary.json"
     json_path.write_text(
         json.dumps(bundle, indent=2) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M4 — ENSEMBLE-BASED PARTICLE-COUNT CONVERGENCE",
+        "PARTICLE COUNT — ENSEMBLE-BASED PARTICLE-COUNT CONVERGENCE",
         "=" * 94,
         f"Generated UTC: {bundle['generated_utc']}",
         "Scenario: C3_Full_fate",
@@ -339,7 +339,7 @@ def main():
         "  not convergence of gridded surface-oil concentration fields.",
     ])
 
-    txt_path = DIAG / "M4_particle_convergence_summary.txt"
+    txt_path = DIAG / "particle_count_convergence_summary.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     plt.rcParams.update({
@@ -395,9 +395,9 @@ def main():
 
     plt.tight_layout(rect=[0, 0.035, 1, 1])
 
-    png = FIGDIR / "M4_particle_convergence_ensemble.png"
-    pdf = FIGDIR / "M4_particle_convergence_ensemble.pdf"
-    svg = FIGDIR / "M4_particle_convergence_ensemble.svg"
+    png = FIGDIR / "particle_count_convergence_ensemble.png"
+    pdf = FIGDIR / "particle_count_convergence_ensemble.pdf"
+    svg = FIGDIR / "particle_count_convergence_ensemble.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
