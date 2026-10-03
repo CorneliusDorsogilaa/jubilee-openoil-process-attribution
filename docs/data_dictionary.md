@@ -37,7 +37,7 @@ Summary outcome metrics for the three-oil sensitivity comparison.
 Reference-oil ensemble variability values used to contextualize the discrete oil-record contrasts.
 
 ## archive_sources/Fig1_reference_plot_source.csv.gz
-Compact submission-matched trajectory/endpoint source for Fig. 1. This replaces redistribution of the larger production NetCDF outputs for plotting/audit purposes.
+Compact submission-matched trajectory/endpoint source for Fig. 1. This replaces redistribution of the larger production NetCDF outputs for plotting and verification purposes.
 
 ## archive_sources/FigS3_per_element_surface_time.csv.gz
 Compact per-element post-release surface-time source used for Supporting Fig. S3.
