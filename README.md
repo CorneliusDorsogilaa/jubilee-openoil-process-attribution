@@ -8,7 +8,7 @@ Authors: Cornelius Dorsogilaa, Shaibu Mohammed, Yaw Akyampon Boakye-Ansah, and N
 
 ## Status
 
-This repository is the **pre-archive staging version** for the paper. The submission-matched release will be tagged `v1.0.0-paper-submission` and archived in Zenodo after the manuscript, Supporting Information, code inventory, and figure-source tables are frozen.
+This repository contains the submission-matched reproducibility package for the paper, including the analysis code, derived data, validation diagnostics, software-environment records, and figure-source tables used for the final manuscript and Supporting Information.
 
 ## Study design
 
@@ -39,13 +39,13 @@ Production calculations use `N = 1000`, a 30 min transport timestep, hourly outp
 
 ## Verified source basis
 
-The manuscript source audit is now locked on three points that do not change any model result:
+The manuscript source verification is documented on three points that do not change any model result:
 
 - The primary Jubilee crude property reference is the official **Tullow 2019 Jubilee assay** (37.41 °API, density 837.3 kg m⁻³ at 15 °C, kinematic viscosity 4.6 cSt at 40 °C, pour point 3 °C). Appenteng et al. (2013) is retained only as an earlier independent characterization showing that reported bulk properties vary with the sampled crude composite.
 - The direct source for the Jubilee stochastic OILMAP precedent is the **2009 Jubilee Field Phase 1 EIS**, which documents 500 independent simulations with different start times for each spill scenario.
 - Carvalho et al. (2025) is used only for the narrower sensitivity claim that API-gravity changes had limited influence on advective displacement but materially affected evaporation in MEDSLIK-II.
 
-A concise audit trail is provided in `docs/source_verification.md`.
+A concise verification record is provided in `docs/source_verification.md`.
 
 ## Repository layout
 
@@ -55,7 +55,7 @@ scripts/
   robustness/       ensemble, Kh, particle-count, and depth analyses
   mechanism/        C2/C3 weathering-to-entrainment reconstruction
   oil_sensitivity/  ADIOS property extraction and three-oil sensitivity
-  audits/           RNG, forcing-resolution, software-provenance, and well-mixed audits
+  validation/       RNG, forcing-resolution, software-provenance, and well-mixed checks
 
 derived_data/       source CSVs behind stable manuscript diagnostics
 metadata/           production settings and seed inventory
@@ -100,7 +100,7 @@ python scripts/robustness/76_analyze_vertical_depth_percentiles.py
 ### Corrected weathering-to-entrainment mechanism
 
 ```bash
-python scripts/mechanism/62_reconstruct_weathering_entrainment_mechanism_mixed_units_fix.py
+python scripts/mechanism/62_reconstruct_weathering_entrainment_mechanism.py
 ```
 
 The corrected reconstruction gives approximately:
@@ -115,7 +115,7 @@ The paper compares Qua Iboe (AD01483), Bonny Light (AD01440), and Cabinda Blend 
 
 ## Derived data
 
-The `derived_data/` directory contains the frozen source tables used for the submitted manuscript diagnostics. Compact trajectory and per-element sources that replace redistribution of selected raw NetCDFs are stored in `archive_sources/`. A machine-readable figure-to-source map is stored in `metadata/figure_source_inventory.csv`, with a human-readable audit in `docs/figure_source_inventory.md`. The final figure-source package is complete; the SHA256 manifest is regenerated only after all release files are frozen.
+The `derived_data/` directory contains the frozen source tables used for the submitted manuscript diagnostics. Compact trajectory and per-element sources that replace redistribution of selected raw NetCDFs are stored in `archive_sources/`. A machine-readable figure-to-source map is stored in `metadata/figure_source_inventory.csv`, with a human-readable inventory in `docs/figure_source_inventory.md`. The final figure-source package is complete; the SHA256 manifest is regenerated only after all release files are frozen.
 
 ## Environment
 
@@ -129,7 +129,7 @@ For the closest recreation of the executed environment, use `environment_exact.y
 
 ## Citation
 
-A `CITATION.cff` file is included. The permanent Zenodo DOI will be added after the submission-matched `v1.0.0-paper-submission` release is archived.
+A `CITATION.cff` file is included. Zenodo provides a version-specific DOI for each archived release.
 
 ## License
 
