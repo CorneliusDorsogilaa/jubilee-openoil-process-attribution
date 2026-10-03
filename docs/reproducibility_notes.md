@@ -4,13 +4,13 @@
 
 The production configuration uses `N = 1000` and a 30 min transport timestep. Timestep sensitivity was a separate C3 screening campaign at `N = 2000`, `Kh = 100 m² s⁻¹`, with 5, 10, 15, and 30 min timesteps and three seeds.
 
-Particle-count robustness was subsequently reevaluated with 20 seeds at `N = 500, 1000, 2000, 4000`. Ensemble-mean A90 values were approximately 732.77, 768.43, 789.07, and 809.85 km², with adjacent mean changes of 4.87%, 2.69%, and 2.63%. The paper therefore treats `N = 1000` as the adopted production resolution under the stated diagnostic criterion, not as a universal minimum converged particle count.
+Particle-count robustness was evaluated with 20 seeds at `N = 500, 1000, 2000, 4000`. Ensemble-mean A90 values were approximately 732.77, 768.43, 789.07, and 809.85 km², with adjacent mean changes of 4.87%, 2.69%, and 2.63%. The paper therefore treats `N = 1000` as the adopted production resolution under the stated diagnostic criterion, not as a universal minimum converged particle count.
 
 ## Kh provenance
 
 The production horizontal diffusivity is `Kh = 100 m² s⁻¹`. Some archived NetCDF metadata queries return `None` for the corresponding attribute. The authoritative value is the executed run configuration plus the file naming / manifest record.
 
-## M8 mixed-unit temperature correction
+## Mixed-unit temperature handling
 
 The archived temperature array used by the mechanism reconstruction contains Celsius-scale records and a Kelvin-scale final record. The reconstruction converts values elementwise when `T > 100` before calling the seawater-density routine. A whole-array median test is not sufficient and produces a spurious final-record Ohnesorge value.
 
