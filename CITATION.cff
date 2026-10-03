@@ -11,7 +11,7 @@ authors:
     given-names: Yaw Akyampon
   - family-names: Dapilee
     given-names: Noel S.
-version: 0.9.0
+version: 1.0.0
 license: MIT
 repository-code: "https://github.com/CorneliusDorsogilaa/jubilee-openoil-process-attribution"
 abstract: >-
