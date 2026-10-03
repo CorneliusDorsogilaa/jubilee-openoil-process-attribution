@@ -4,7 +4,7 @@ Script 59: Check whether C3 emulsification reaches the ADIOS Y_max ceiling.
 
 Purpose
 -------
-Reviewer #2 noted that the reported C3 mean water fraction (~0.896) is very
+The C3 mean water fraction (~0.896) is close
 close to the Bonny Light ADIOS maximum emulsion water fraction (Y_max = 0.9).
 
 This script inspects the final-time water_fraction distribution in the
@@ -16,8 +16,8 @@ authoritative C3 production NetCDF and reports:
 
 Outputs
 -------
-diagnostics/reviewer2/C3_water_fraction_Ymax_check.txt
-diagnostics/reviewer2/C3_water_fraction_Ymax_check.json
+diagnostics/validation/C3_water_fraction_Ymax_check.txt
+diagnostics/validation/C3_water_fraction_Ymax_check.json
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ import numpy as np
 import xarray as xr
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 YMAX = 0.9
@@ -123,7 +123,7 @@ def main():
     )
 
     lines = [
-        "REVIEWER #2 M10 — C3 WATER-FRACTION Y_MAX CHECK",
+        "C3 WATER-FRACTION Y_MAX CHECK",
         "=" * 68,
         f"Source NetCDF: {result['source_netcdf']}",
         f"Y_max: {YMAX}",
