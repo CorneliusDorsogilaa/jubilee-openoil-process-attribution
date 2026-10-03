@@ -15,7 +15,7 @@ VERTICAL MIXING-B. Run an isolated well-mixed-condition diagnostic using the sam
 
 VERTICAL MIXING-C. Extract the 49 hourly ERA5 10 m wind values at the Jubilee release point,
       calculate the implemented 5 m/s breaking-wave threshold diagnostic, and
-      align them with the revised Fig. 3 C2/C3 occupancy time series.
+      align them with the Fig. 3 C2/C3 occupancy time series.
 
 This script does NOT modify any production NetCDF file.
 
@@ -501,8 +501,8 @@ def find_script74():
 
 
 def extract_release_point_wind_wave():
-    m7 = load_python_module(find_script74(), "m7_for_r3")
-    prod = m7.load_script25()
+    reader_tools = load_python_module(find_script74(), "temporal_reader_tools")
+    prod = reader_tools.load_script25()
     config = prod.load_config(prod.DEFAULT_CONFIG)
     helper04 = prod.load_script_module(
         "reader_check_r3",
@@ -520,18 +520,18 @@ def extract_release_point_wind_wave():
 
     for section, path in paths.items():
         with xr.open_dataset(path) as ds:
-            ds, tname = m7.subset_time(ds)
-            site = m7.nearest_site(ds)
+            ds, tname = reader_tools.subset_time(ds)
+            site = reader_tools.nearest_site(ds)
 
-            u10 = m7.find_var(
+            u10 = reader_tools.find_var(
                 site,
                 ["u10", "x_wind", "eastward_wind", "eastward_wind_at_10m"],
             )
-            v10 = m7.find_var(
+            v10 = reader_tools.find_var(
                 site,
                 ["v10", "y_wind", "northward_wind", "northward_wind_at_10m"],
             )
-            tp = m7.find_var(
+            tp = reader_tools.find_var(
                 site,
                 [
                     "pp1d",
@@ -541,8 +541,8 @@ def extract_release_point_wind_wave():
             )
 
             if u10 and v10 and wind is None:
-                tw, u = m7.surface_series(site, u10, tname)
-                _, v = m7.surface_series(site, v10, tname)
+                tw, u = reader_tools.surface_series(site, u10, tname)
+                _, v = reader_tools.surface_series(site, v10, tname)
                 wind = pd.DataFrame({
                     "time_utc": pd.to_datetime(tw),
                     "u10_m_s": u,
@@ -550,7 +550,7 @@ def extract_release_point_wind_wave():
                 })
 
             if tp and wave is None:
-                tt, period = m7.surface_series(site, tp, tname)
+                tt, period = reader_tools.surface_series(site, tp, tname)
                 wave = pd.DataFrame({
                     "time_utc": pd.to_datetime(tt),
                     "peak_wave_period_s": period,
