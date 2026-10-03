@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Script 72: Reviewer #2 M5 RNG-management audit.
+Script 72: RNG RNG-management audit.
 
 Purpose
 -------
 Determine how OpenDrift/OpenOil 1.14.12 manages random-number generation
 for the processes used in the C0-C3 experiment.
 
-Reviewer #2 specifically questioned whether enabling vertical mixing changes
+specifically questioned whether enabling vertical mixing changes
 the random-number sequence subsequently consumed by horizontal diffusion.
 This script inspects the installed source rather than inferring behavior.
 
@@ -21,8 +21,8 @@ It records:
 
 Outputs
 -------
-diagnostics/reviewer2/M5_rng_audit.txt
-diagnostics/reviewer2/M5_rng_audit.json
+diagnostics/validation/rng_management_check.txt
+diagnostics/validation/rng_management_check.json
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ import numpy as np
 from opendrift.models.openoil import OpenOil
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 RNG_PATTERNS = (
@@ -187,14 +187,14 @@ def main():
         "package_wide_rng_lines": package_hits,
     }
 
-    json_path = OUTDIR / "M5_rng_audit.json"
+    json_path = OUTDIR / "rng_management_check.json"
     json_path.write_text(
         json.dumps(bundle, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M5 — RNG MANAGEMENT AUDIT",
+        "RNG — RNG MANAGEMENT CHECK",
         "=" * 92,
         f"Generated UTC: {generated}",
         f"OpenDrift version: {od_version}",
@@ -261,7 +261,7 @@ def main():
         "those streams instead.",
     ])
 
-    txt_path = OUTDIR / "M5_rng_audit.txt"
+    txt_path = OUTDIR / "rng_management_check.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("\n".join(lines[:160]))
