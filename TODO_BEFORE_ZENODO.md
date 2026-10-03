@@ -15,8 +15,8 @@ Do **not** tag the final `v1.0.0-paper-submission` release until these are compl
 ## Still required before Zenodo
 
 - [x] Replace the staging environment record with the verified portable `environment.yml` and add `environment_exact.yml` as the exact executed environment snapshot (local `prefix:` removed).
-- [ ] Complete the final figure-source package. The inventory itself is now archived in `metadata/figure_source_inventory.csv`; remaining missing CSVs/plot builders are listed in `docs/figure_source_inventory.md`.
-- [ ] Decide whether selected raw OpenOil result NetCDFs belong in Zenodo; do **not** redistribute ERA5 or GLORYS forcing products in GitHub.
+- [ ] Complete the final figure-source package. The collected files have been audited and reduced to authoritative scripts/diagnostics; one curated repository upload plus the compact Fig. 1/Fig. S3 exporter run remain.
+- [x] Raw-output policy fixed: do **not** archive the large OpenOil NetCDFs. Archive compact figure-source exports plus run configuration and scripts; do not redistribute ERA5 or GLORYS forcing products.
 - [ ] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
 - [ ] Change `CITATION.cff` version from `0.9.0` to `1.0.0`.
 - [ ] Create GitHub release `v1.0.0-paper-submission`.
