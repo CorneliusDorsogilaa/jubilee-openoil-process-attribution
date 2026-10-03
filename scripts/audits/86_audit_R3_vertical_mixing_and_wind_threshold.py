@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-86_audit_R3_vertical_mixing_and_wind_threshold.py
+86_check_VERTICAL MIXING_vertical_mixing_and_wind_threshold.py
 
-Reviewer-response audit for two outstanding issues:
+check for two outstanding issues:
 
-R3-A. Verify the sign and implementation details of the OpenDrift vertical
+VERTICAL MIXING-A. Verify the sign and implementation details of the OpenDrift vertical
       diffusivity-gradient correction used by the installed OpenDrift package.
 
-R3-B. Run an isolated well-mixed-condition diagnostic using the same numerical
+VERTICAL MIXING-B. Run an isolated well-mixed-condition diagnostic using the same numerical
       update form as OpenDrift, comparing the installed/source sign with the
       opposite sign under:
         (i) a smooth K(z) profile, and
         (ii) the production Sundby1983 profile with the study MLD/background K.
 
-R3-C. Extract the 49 hourly ERA5 10 m wind values at the Jubilee release point,
+VERTICAL MIXING-C. Extract the 49 hourly ERA5 10 m wind values at the Jubilee release point,
       calculate the implemented 5 m/s breaking-wave threshold diagnostic, and
       align them with the revised Fig. 3 C2/C3 occupancy time series.
 
@@ -21,14 +21,14 @@ This script does NOT modify any production NetCDF file.
 
 Outputs
 -------
-diagnostics/reviewer2/R3_vertical_mixing_source_audit.txt
-diagnostics/reviewer2/R3_well_mixed_summary.csv
-diagnostics/reviewer2/R3_well_mixed_histograms.csv
-diagnostics/reviewer2/R3_wind_threshold_occupancy.csv
-diagnostics/reviewer2/R3_wind_threshold_summary.txt
+diagnostics/validation/vertical_mixing_source_check.txt
+diagnostics/validation/vertical_mixing_summary.csv
+diagnostics/validation/vertical_mixing_histograms.csv
+diagnostics/validation/wind_threshold_occupancy.csv
+diagnostics/validation/wind_threshold_summary.txt
 
-figures_revised/R3_well_mixed_diagnostic.pdf/png/svg
-figures_revised/R3_wind_threshold_occupancy.pdf/png/svg
+figures/vertical_mixing_diagnostic.pdf/png/svg
+figures/wind_threshold_occupancy.pdf/png/svg
 
 Interpretation discipline
 -------------------------
@@ -64,8 +64,8 @@ from opendrift.models.physics_methods import verticaldiffusivity_Sundby1983
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name.lower() == "scripts" else SCRIPT_DIR
 
-DIAG = ROOT / "diagnostics" / "reviewer2"
-FIGDIR = ROOT / "figures_revised"
+DIAG = ROOT / "diagnostics" / "validation"
+FIGDIR = ROOT / "figures"
 DIAG.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
 
@@ -87,11 +87,11 @@ TEST_COLUMN_DEPTH_M = 20.0
 N_HIST_BINS = 40
 RNG_SEED = 20220901
 
-FIG3_CSV = ROOT / "figures_revised" / "Fig3_revised_vertical_timeseries.csv"
+FIG3_CSV = ROOT / "figures" / "Fig3_vertical_timeseries.csv"
 
 
 # =============================================================================
-# SOURCE AUDIT
+# SOURCE CHECK
 # =============================================================================
 
 def opendrift_version() -> str:
@@ -101,7 +101,7 @@ def opendrift_version() -> str:
         return "unknown"
 
 
-def audit_installed_source() -> dict:
+def check_installed_source() -> dict:
     src = inspect.getsource(OceanDrift.vertical_mixing)
 
     lines = src.splitlines()
@@ -147,9 +147,9 @@ def audit_installed_source() -> dict:
         "key_source_lines": key_lines,
     }
 
-    out = DIAG / "R3_vertical_mixing_source_audit.txt"
+    out = DIAG / "vertical_mixing_source_check.txt"
     text = [
-        "R3 VERTICAL-MIXING SOURCE AUDIT",
+        "VERTICAL MIXING VERTICAL-MIXING SOURCE CHECK",
         "=" * 88,
         f"Installed OpenDrift distribution: {result['opendrift_distribution_version']}",
         f"Source file: {result['source_file']}",
@@ -420,9 +420,9 @@ def run_well_mixed_suite():
     hist = pd.concat(hist_rows, ignore_index=True)
     profiles_df = pd.concat(profile_rows, ignore_index=True)
 
-    summary.to_csv(DIAG / "R3_well_mixed_summary.csv", index=False)
-    hist.to_csv(DIAG / "R3_well_mixed_histograms.csv", index=False)
-    profiles_df.to_csv(DIAG / "R3_diffusivity_profiles.csv", index=False)
+    summary.to_csv(DIAG / "vertical_mixing_summary.csv", index=False)
+    hist.to_csv(DIAG / "vertical_mixing_histograms.csv", index=False)
+    profiles_df.to_csv(DIAG / "vertical_mixing_diffusivity_profiles.csv", index=False)
 
     # Plot: K profiles + final depth distributions.
     fig, axes = plt.subplots(2, 2, figsize=(10.5, 8))
@@ -470,16 +470,16 @@ def run_well_mixed_suite():
         axH.legend(frameon=False)
 
     fig.tight_layout()
-    fig.savefig(FIGDIR / "R3_well_mixed_diagnostic.pdf", bbox_inches="tight")
-    fig.savefig(FIGDIR / "R3_well_mixed_diagnostic.png", dpi=600, bbox_inches="tight")
-    fig.savefig(FIGDIR / "R3_well_mixed_diagnostic.svg", bbox_inches="tight")
+    fig.savefig(FIGDIR / "vertical_mixing_diagnostic.pdf", bbox_inches="tight")
+    fig.savefig(FIGDIR / "vertical_mixing_diagnostic.png", dpi=600, bbox_inches="tight")
+    fig.savefig(FIGDIR / "vertical_mixing_diagnostic.svg", bbox_inches="tight")
     plt.close(fig)
 
     return summary
 
 
 # =============================================================================
-# WIND THRESHOLD / FIG. 3 OCCUPANCY AUDIT
+# WIND THRESHOLD / FIG. 3 OCCUPANCY CHECK
 # =============================================================================
 
 def load_python_module(path: Path, name: str):
@@ -492,10 +492,10 @@ def load_python_module(path: Path, name: str):
 
 
 def find_script74():
-    candidates = sorted((ROOT / "scripts").glob("74_audit_M7_temporal_resolution_fixed*.py"))
+    candidates = sorted((ROOT / "scripts").glob("74_check_temporal_resolution_fixed*.py"))
     if not candidates:
         raise FileNotFoundError(
-            "Could not find scripts/74_audit_M7_temporal_resolution_fixed*.py"
+            "Could not find scripts/74_check_temporal_resolution_fixed*.py"
         )
     return candidates[0]
 
@@ -569,7 +569,7 @@ def extract_release_point_wind_wave():
     else:
         wind["peak_wave_period_s"] = np.nan
 
-    # Implemented breaking-fraction behavior reconstructed in M8.
+    # Implemented breaking-fraction behavior reconstructed in MECHANISM.
     with np.errstate(divide="ignore", invalid="ignore"):
         breaking = 0.032 * (wind["wind_speed_m_s"].to_numpy() - 5.0) / \
             wind["peak_wave_period_s"].to_numpy()
@@ -613,7 +613,7 @@ def lag_correlations(wind_occ: pd.DataFrame, occ_col: str, driver_col: str, maxl
     return rows
 
 
-def wind_threshold_audit():
+def wind_threshold_check():
     wind = extract_release_point_wind_wave()
 
     if not FIG3_CSV.exists():
@@ -646,13 +646,13 @@ def wind_threshold_audit():
     out = wind.merge(c2, on="elapsed_h", how="left")
     out = out.merge(c3, on="elapsed_h", how="left")
 
-    out.to_csv(DIAG / "R3_wind_threshold_occupancy.csv", index=False)
+    out.to_csv(DIAG / "wind_threshold_occupancy.csv", index=False)
 
     below = out["wind_speed_m_s"] < 5.0
     above = out["wind_speed_m_s"] >= 5.0
 
     summary_lines = [
-        "R3 WIND-THRESHOLD / FIG. 3 OCCUPANCY AUDIT",
+        "VERTICAL MIXING WIND-THRESHOLD / FIG. 3 OCCUPANCY CHECK",
         "=" * 88,
         f"Hourly ERA5 samples: {len(out)}",
         f"Wind < 5 m/s: {int(below.sum())}",
@@ -681,7 +681,7 @@ def wind_threshold_audit():
         )
 
     corr_df = pd.DataFrame(corr_rows)
-    corr_df.to_csv(DIAG / "R3_wind_occupancy_lag_correlations.csv", index=False)
+    corr_df.to_csv(DIAG / "wind_occupancy_lag_correlations.csv", index=False)
 
     for occ_col in ["C2_subsurface_occupancy", "C3_subsurface_occupancy"]:
         sub = corr_df[corr_df["occupancy_column"] == occ_col]
@@ -699,13 +699,13 @@ def wind_threshold_audit():
         "",
         "INTERPRETATION LIMIT",
         "-" * 88,
-        "This is a descriptive temporal-alignment audit. A threshold-aligned occupancy",
+        "This is a descriptive temporal-alignment check. A threshold-aligned occupancy",
         "response would support the proposed interpretation, but it does not establish",
         "causality because wave height, wave period, buoyant resurfacing, and oil state",
         "also affect vertical exchange.",
     ])
 
-    (DIAG / "R3_wind_threshold_summary.txt").write_text(
+    (DIAG / "wind_threshold_summary.txt").write_text(
         "\n".join(summary_lines) + "\n",
         encoding="utf-8",
     )
@@ -745,13 +745,13 @@ def wind_threshold_audit():
     axes[1].legend(frameon=False)
 
     fig.tight_layout()
-    fig.savefig(FIGDIR / "R3_wind_threshold_occupancy.pdf", bbox_inches="tight")
+    fig.savefig(FIGDIR / "wind_threshold_occupancy.pdf", bbox_inches="tight")
     fig.savefig(
-        FIGDIR / "R3_wind_threshold_occupancy.png",
+        FIGDIR / "wind_threshold_occupancy.png",
         dpi=600,
         bbox_inches="tight",
     )
-    fig.savefig(FIGDIR / "R3_wind_threshold_occupancy.svg", bbox_inches="tight")
+    fig.savefig(FIGDIR / "wind_threshold_occupancy.svg", bbox_inches="tight")
     plt.close(fig)
 
     return out, corr_df
@@ -762,35 +762,35 @@ def wind_threshold_audit():
 # =============================================================================
 
 def main():
-    print("\nR3-A: auditing installed OpenDrift source...")
-    source_audit = audit_installed_source()
+    print("\nVERTICAL MIXING-A: checking installed OpenDrift source...")
+    source_check = check_installed_source()
     print(
         "Installed OpenDrift:",
-        source_audit["opendrift_distribution_version"],
+        source_check["opendrift_distribution_version"],
     )
     print(
         "Equivalent physical gradient term:",
-        source_audit["equivalent_physical_gradient_term"],
+        source_check["equivalent_physical_gradient_term"],
     )
 
-    print("\nR3-B: running isolated well-mixed diagnostics...")
+    print("\nVERTICAL MIXING-B: running isolated well-mixed diagnostics...")
     summary = run_well_mixed_suite()
     print(summary.to_string(index=False))
 
-    print("\nR3-C: extracting 49-hourly wind series and aligning with Fig. 3...")
-    wind_occ, corr = wind_threshold_audit()
+    print("\nVERTICAL MIXING-C: extracting 49-hourly wind series and aligning with Fig. 3...")
+    wind_occ, corr = wind_threshold_check()
 
     print("\nCreated:")
     for p in [
-        DIAG / "R3_vertical_mixing_source_audit.txt",
-        DIAG / "R3_well_mixed_summary.csv",
-        DIAG / "R3_well_mixed_histograms.csv",
-        DIAG / "R3_diffusivity_profiles.csv",
-        DIAG / "R3_wind_threshold_occupancy.csv",
-        DIAG / "R3_wind_occupancy_lag_correlations.csv",
-        DIAG / "R3_wind_threshold_summary.txt",
-        FIGDIR / "R3_well_mixed_diagnostic.pdf",
-        FIGDIR / "R3_wind_threshold_occupancy.pdf",
+        DIAG / "vertical_mixing_source_check.txt",
+        DIAG / "vertical_mixing_summary.csv",
+        DIAG / "vertical_mixing_histograms.csv",
+        DIAG / "vertical_mixing_diffusivity_profiles.csv",
+        DIAG / "wind_threshold_occupancy.csv",
+        DIAG / "wind_occupancy_lag_correlations.csv",
+        DIAG / "wind_threshold_summary.txt",
+        FIGDIR / "vertical_mixing_diagnostic.pdf",
+        FIGDIR / "wind_threshold_occupancy.pdf",
     ]:
         print(f"  {p}")
 
