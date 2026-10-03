@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Script 78: Reviewer #2 M10 lighter-oil candidate screen.
+Script 78: OIL SENSITIVITY lighter-oil candidate screen.
 
 Purpose
 -------
-Reviewer #2 noted that the existing Bonny Light -> Cabinda Blend sensitivity
+noted that the existing Bonny Light -> Cabinda Blend sensitivity
 is one-sided because Cabinda is substantially more viscous. This script screens
 the installed OpenDrift/ADIOS oil library for a valid LIGHTER / LESS VISCOUS
 crude-oil contrast relative to the baseline AD01440 Bonny Light record.
@@ -29,9 +29,9 @@ sensitivity simulations.
 
 Outputs
 -------
-diagnostics/reviewer2/M10_lighter_oil_candidates.csv
-diagnostics/reviewer2/M10_lighter_oil_candidates.json
-diagnostics/reviewer2/M10_lighter_oil_candidates.txt
+diagnostics/validation/lighter_oil_candidates.csv
+diagnostics/validation/lighter_oil_candidates.json
+diagnostics/validation/lighter_oil_candidates.txt
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ import pandas as pd
 from opendrift.models.openoil import OpenOil
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 BASELINE_ID = "AD01440"
@@ -282,7 +282,7 @@ def main():
         ~candidates["name"].str.contains("BONNY LIGHT", case=False, na=False)
     ]
 
-    csv_path = OUTDIR / "M10_lighter_oil_candidates.csv"
+    csv_path = OUTDIR / "lighter_oil_candidates.csv"
     candidates.to_csv(csv_path, index=False)
 
     top = candidates.head(25)
@@ -306,14 +306,14 @@ def main():
         "failures": failures[:100],
     }
 
-    json_path = OUTDIR / "M10_lighter_oil_candidates.json"
+    json_path = OUTDIR / "lighter_oil_candidates.json"
     json_path.write_text(
         json.dumps(bundle, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M10 — LIGHTER-OIL CANDIDATE SCREEN",
+        "OIL SENSITIVITY — LIGHTER-OIL CANDIDATE SCREEN",
         "=" * 104,
         f"Generated UTC: {bundle['generated_utc']}",
         "",
@@ -362,7 +362,7 @@ def main():
         "and property provenance before the production rerun.",
     ])
 
-    txt_path = OUTDIR / "M10_lighter_oil_candidates.txt"
+    txt_path = OUTDIR / "lighter_oil_candidates.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("\n".join(lines))
