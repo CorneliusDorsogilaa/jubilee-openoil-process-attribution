@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Script 81: OpenDrift version-provenance audit.
+Script 81: OpenDrift version-provenance check.
 
 Purpose
 -------
-Resolve the apparent version discrepancy observed during Reviewer #2 checks:
+Resolve the apparent version discrepancy observed during checks:
 
     importlib.metadata.version("opendrift") -> 1.14.12
     opendrift.__version__                  -> 1.14.11
@@ -17,8 +17,8 @@ It also checks representative production and Qua Iboe NetCDF files.
 
 Outputs
 -------
-diagnostics/reviewer2/M12_opendrift_version_provenance.txt
-diagnostics/reviewer2/M12_opendrift_version_provenance.json
+diagnostics/validation/opendrift_version_provenance.txt
+diagnostics/validation/opendrift_version_provenance.json
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ import xarray as xr
 import opendrift
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 PKG_ROOT = Path(opendrift.__file__).resolve().parent
@@ -157,14 +157,14 @@ def main():
         "interpretation": interpretation,
     }
 
-    json_path = OUTDIR / "M12_opendrift_version_provenance.json"
+    json_path = OUTDIR / "opendrift_version_provenance.json"
     json_path.write_text(
         json.dumps(bundle, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 / M12 — OPENDRIFT VERSION PROVENANCE AUDIT",
+        "/ SOFTWARE VERSION — OPENDRIFT VERSION PROVENANCE CHECK",
         "=" * 100,
         f"Generated UTC: {bundle['generated_utc']}",
         "",
@@ -219,7 +219,7 @@ def main():
         "the exact provenance rather than guessing or silently rewriting metadata.",
     ])
 
-    txt_path = OUTDIR / "M12_opendrift_version_provenance.txt"
+    txt_path = OUTDIR / "opendrift_version_provenance.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("\n".join(lines))
