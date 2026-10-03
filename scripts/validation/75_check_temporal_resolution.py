@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 75: TEMPORAL RESOLUTION temporal-resolution audit, corrected interpolation.
+Script 75: Temporal-resolution validation check with corrected interpolation.
 
 Purpose
 -------
@@ -17,9 +17,9 @@ inertial, or other sub-daily current variability.
 
 Outputs
 -------
-diagnostics/validation/temporal_resolution_audit.csv
-diagnostics/validation/temporal_resolution_audit.txt
-diagnostics/validation/temporal_resolution_audit.json
+diagnostics/validation/temporal_resolution_check.csv
+diagnostics/validation/temporal_resolution_check.txt
+diagnostics/validation/temporal_resolution_check.json
 figures/temporal_resolution_diagnostic.png
 figures/temporal_resolution_diagnostic.pdf
 figures/temporal_resolution_diagnostic.svg
@@ -381,7 +381,7 @@ def main():
 
     lines.extend([
         "",
-        "WHAT THIS AUDIT CAN AND CANNOT ESTABLISH",
+        "WHAT THIS CHECK CAN AND CANNOT ESTABLISH",
         "-" * 94,
         "The mismatch is real: the current forcing has 3 native snapshots over 48 h,",
         "whereas wind and wave forcing have 49 hourly samples.",
