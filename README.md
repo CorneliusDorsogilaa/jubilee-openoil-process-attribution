@@ -1,0 +1,119 @@
+# Jubilee OpenOil Process Attribution
+
+Reproducibility repository for the manuscript:
+
+**Process Attribution in Offshore Oil Spill Transport and Weathering at the Jubilee Field, Ghana: A Stepwise OpenOil Configuration Study**
+
+Authors: Cornelius Dorsogilaa, Shaibu Mohammed, Yaw Akyampon Boakye-Ansah, and Noel S. Dapilee.
+
+## Status
+
+This repository is the **pre-archive staging version** for the paper. The submission-matched release will be tagged `v1.0.0-paper-submission` and archived in Zenodo after the manuscript, Supporting Information, code inventory, and figure-source tables are frozen.
+
+## Study design
+
+The study is a controlled OpenDrift/OpenOil process-attribution experiment at the Jubilee Terminal FPSO location (4.60000° N, 2.89000° W). A 6 h continuous surface release within a 500 m radius is tracked for 48 h under common environmental forcing.
+
+The four nested configurations are:
+
+| Configuration | Process package |
+|---|---|
+| C0 | currents + horizontal diffusion |
+| C1 | C0 + direct wind drift + Stokes drift |
+| C2 | C1 + reversible vertical exchange |
+| C3 | C2 + evaporation + emulsification + natural dispersion |
+
+Production calculations use `N = 1000`, a 30 min transport timestep, hourly output, `Kh = 100 m² s⁻¹`, reference seed `20220901`, and Bonny Light (NOAA ADIOS AD01440) as a disclosed West African light-crude analogue. The primary stochastic inference uses 20 seeds (`20220901`–`20220920`).
+
+## Important provenance notes
+
+- Installed OpenDrift distribution: **1.14.12**.
+- Bundled internal/module identifier written to production NetCDF: **1.14.11**.
+- `Kh = 100 m² s⁻¹` is authoritative from the executed run configuration and filename/manifest. A queried NetCDF configuration attribute can be absent (`None`) and should not be interpreted as `Kh = 0` or as an unknown production setting.
+- Production particle count is **N = 1000**. The transport-timestep screening campaign was run separately for **C3 at N = 2000** using 5, 10, 15, and 30 min timesteps and three seeds.
+- C0–C3 use a common seed policy and common initialization, but activating additional stochastic processes changes subsequent random-number consumption. Ensemble inference is therefore used instead of assuming process-by-process matched random variates.
+- The M8 mechanism reconstruction contains an explicit elementwise Kelvin-to-Celsius guard because the archived production temperature field contains a mixed-unit final record. The corrected post-release Ohnesorge ratio is approximately **465.8×**, not the obsolete 544× value from the earlier whole-array temperature check.
+- OpenOil's NOAA evaporation routine stops further evaporation once the youngest active surface element exceeds 24 h of age. For the 6 h release, cumulative evaporation therefore plateaus after approximately 30 h.
+- Bonny Light is an analogue used for executable OpenOil weathering, not an exact Jubilee crude assay.
+
+## Repository layout
+
+```text
+scripts/
+  production/       authoritative production runner
+  robustness/       ensemble, Kh, particle-count, and depth analyses
+  mechanism/        C2/C3 weathering-to-entrainment reconstruction
+  oil_sensitivity/  ADIOS property extraction and three-oil sensitivity
+  audits/           RNG, forcing-resolution, software-provenance, and well-mixed audits
+
+derived_data/       source CSVs behind stable manuscript diagnostics
+metadata/           production settings and seed inventory
+docs/               reproducibility and archive notes
+```
+
+## External forcing data
+
+ERA5 and Copernicus Marine GLORYS12V1 forcing files are **not redistributed in this GitHub repository**. They remain subject to the access and licensing conditions of their respective providers. The reproducibility archive records the forcing window, variables, native sampling, and project configuration needed to retrieve and use the same products.
+
+Production forcing window: **2020-03-01 00:00 UTC to 2020-03-03 00:00 UTC**.
+
+## Core analyses
+
+### Production configurations
+
+```bash
+python scripts/production/25_run_production_scenarios.py
+```
+
+### 20-seed particle-count robustness
+
+```bash
+python scripts/robustness/70_run_M4_particle_ensemble.py
+python scripts/robustness/71_analyze_M4_particle_convergence.py
+```
+
+### Horizontal-diffusivity sensitivity
+
+The final sensitivity figure uses the 20-seed paired C1→C2 results at `Kh = 10, 100, 1000 m² s⁻¹`.
+
+```bash
+python scripts/robustness/57_plot_Kh_sensitivity_pub.py
+```
+
+### Robust vertical-depth statistics
+
+```bash
+python scripts/robustness/76_analyze_M9_vertical_depth_percentiles.py
+```
+
+### Corrected weathering-to-entrainment mechanism
+
+```bash
+python scripts/mechanism/62_reconstruct_M8_mechanism_mixed_units_fix.py
+```
+
+The corrected reconstruction gives approximately:
+
+- C3/C2 post-release kinematic-viscosity ratio: **769.4×**
+- C3/C2 post-release Ohnesorge ratio: **465.8×**
+- C3/C2 reconstructed entrainment-rate ratio: **0.0393**, i.e. **96.1% lower** in C3
+
+### Three-oil sensitivity
+
+The paper compares Qua Iboe (AD01483), Bonny Light (AD01440), and Cabinda Blend (AD01442) as discrete oil-record contrasts. They are **not** calibrated uncertainty bounds for Jubilee crude.
+
+## Derived data
+
+The `derived_data/` directory contains stable source tables already used for manuscript diagnostics. Final release `v1.0.0-paper-submission` will contain the complete submission-matched figure-source inventory and SHA256 manifest.
+
+## Environment
+
+A minimal environment template is supplied in `environment.yml`. Before the Zenodo release, it should be replaced or supplemented with the exact export from the `jubilee-openoil-g2` runtime used for the final analyses.
+
+## Citation
+
+A `CITATION.cff` file is included. The permanent Zenodo DOI will be added after the submission-matched `v1.0.0-paper-submission` release is archived.
+
+## License
+
+Code in this repository is released under the MIT License. Derived tables created by the authors may be reused with attribution; third-party environmental data and software remain under their original licenses.
