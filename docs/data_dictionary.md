@@ -9,16 +9,16 @@ Reference-realization annotations used in Fig. 1: centroid displacement, central
 ## Figure2_paired_A90_changes.csv
 Paired 20-seed changes in central 90% footprint area across C0→C1, C1→C2, and C2→C3.
 
-## Fig3_revised_vertical_timeseries.csv
+## Fig3_vertical_timeseries.csv
 Reference-realization C1-C3 vertical-exchange time series, including cumulative post-release surface exposure, instantaneous subsurface occupancy, and mean submerged depth.
 
-## Fig3_revised_vertical_depth_ensemble.csv
+## Fig3_vertical_depth_ensemble.csv
 Twenty-seed upper-tail vertical-depth statistics using p95 and p99 of per-trajectory maximum depth.
 
-## Fig4_revised_C3_fate_timeseries.csv
+## Fig4_C3_fate_timeseries.csv
 Reference-realization C3 fate, represented-mass accounting, evaporation, dispersion, and emulsification time series.
 
-## Fig5_revised_weathering_entrainment_mechanism.csv
+## Fig5_weathering_entrainment_mechanism.csv
 Corrected C2/C3 mechanism-reconstruction time series. Downstream annotations must use the mixed-unit corrected Ohnesorge result, approximately 465.8× for the post-release C3/C2 ratio.
 
 ## Fig6_timestep_screen.csv
