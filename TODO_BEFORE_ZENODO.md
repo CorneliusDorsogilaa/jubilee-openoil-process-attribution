@@ -14,7 +14,7 @@ Do **not** tag the final `v1.0.0-paper-submission` release until these are compl
 
 ## Still required before Zenodo
 
-- [ ] Replace the staging `environment.yml` with an exact final environment export and add an explicit package lock.
+- [x] Replace the staging environment record with the verified portable `environment.yml` and add `environment_exact.yml` as the exact executed environment snapshot (local `prefix:` removed).
 - [ ] Add the complete final figure-source CSV inventory and any small redistribution-safe diagnostic outputs.
 - [ ] Decide whether selected raw OpenOil result NetCDFs belong in Zenodo; do **not** redistribute ERA5 or GLORYS forcing products in GitHub.
 - [ ] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
