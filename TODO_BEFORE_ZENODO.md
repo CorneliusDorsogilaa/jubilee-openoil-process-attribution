@@ -17,7 +17,7 @@ Do **not** tag the final `v1.0.0-paper-submission` release until these are compl
 - [x] Replace the staging environment record with the verified portable `environment.yml` and add `environment_exact.yml` as the exact executed environment snapshot (local `prefix:` removed).
 - [x] Complete the final figure-source package. Authoritative figure builders, Reviewer #2 diagnostics, compact Fig. 1/Fig. S3 exports, and submitted-figure source tables are committed.
 - [x] Raw-output policy fixed: do **not** archive the large OpenOil NetCDFs. Archive compact figure-source exports plus run configuration and scripts; do not redistribute ERA5 or GLORYS forcing products.
-- [ ] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
+- [x] Recompute `metadata/file_manifest_sha256.csv` after every final repository change.
 - [x] Change `CITATION.cff` version from `0.9.0` to `1.0.0`.
 - [ ] Create GitHub release `v1.0.0-paper-submission`.
 - [ ] Enable the repository in Zenodo, archive the tagged release, obtain the DOI, and insert that DOI into the main manuscript and Supporting Information.
