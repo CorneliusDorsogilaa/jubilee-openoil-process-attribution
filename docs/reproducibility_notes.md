@@ -31,3 +31,8 @@ These are discrete property contrasts. They do not define a probabilistic confid
 ## External data
 
 GLORYS12V1 and ERA5 forcing data are not redistributed here. Record provider, product, variables, dates, sampling, and retrieval details in the final archive metadata.
+
+
+## Software environment freeze
+
+The final repository contains two Conda environment records. `environment.yml` is a compact recreation specification for the principal runtime dependencies. `environment_exact.yml` is the exact exported `jubilee-openoil-g2` environment used for the final analyses, with the machine-specific local Conda `prefix:` removed before publication. The exact export records Python 3.11.16 and OpenDrift 1.14.12.
