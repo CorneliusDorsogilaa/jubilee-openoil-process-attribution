@@ -4,7 +4,7 @@ Script 77: Close RNG and the MECHANISM surface-exposure bookkeeping question.
 
 Purpose
 -------
-This source-code audit answers two validation questions using the exact installed
+This source-code check addresses two validation questions using the exact installed
 OpenDrift/OpenOil environment and the authoritative production analysis script.
 
 RNG:
