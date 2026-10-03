@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-87_build_revised_Fig5_weathering_entrainment_mechanism.py
+build_Fig5_weathering_entrainment_mechanism.py
 
 Rebuild the manuscript Fig. 5 mechanism figure from the authoritative
 Internal validation mechanism reconstruction outputs.
