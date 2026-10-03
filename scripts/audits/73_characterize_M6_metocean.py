@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 73: Reviewer #2 M6 metocean characterization of the production window.
+Script 73: METOCEAN metocean characterization of the production window.
 
 Purpose
 -------
@@ -9,7 +9,7 @@ Characterize the exact 48 h forcing window used in the production simulations:
 at the Jubilee release location:
     4.60000 N, 2.89000 W
 
-Reviewer #2 requested mean and range of:
+requested mean and range of:
     wind speed
     significant wave height, Hs
     peak wave period, Tp
@@ -28,12 +28,12 @@ configuration.
 
 Outputs
 -------
-diagnostics/reviewer2/M6_metocean_timeseries.csv
-diagnostics/reviewer2/M6_metocean_summary.txt
-diagnostics/reviewer2/M6_metocean_summary.json
-figures/M6_metocean_window.png
-figures/M6_metocean_window.pdf
-figures/M6_metocean_window.svg
+diagnostics/validation/metocean_timeseries.csv
+diagnostics/validation/metocean_summary.txt
+diagnostics/validation/metocean_summary.json
+figures/metocean_window.png
+figures/metocean_window.pdf
+figures/metocean_window.svg
 """
 
 from __future__ import annotations
@@ -49,7 +49,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-DIAG = ROOT / "diagnostics" / "reviewer2"
+DIAG = ROOT / "diagnostics" / "validation"
 FIGDIR = ROOT / "figures"
 DIAG.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
@@ -330,7 +330,7 @@ def main():
         rows.append({"source": "waves", "time_utc": t, "metric": "Tp_s", "value": v})
 
     ts_df = pd.DataFrame(rows)
-    ts_csv = DIAG / "M6_metocean_timeseries.csv"
+    ts_csv = DIAG / "metocean_timeseries.csv"
     ts_df.to_csv(ts_csv, index=False)
 
     summary = {
@@ -381,14 +381,14 @@ def main():
         },
     }
 
-    json_path = DIAG / "M6_metocean_summary.json"
+    json_path = DIAG / "metocean_summary.json"
     json_path.write_text(
         json.dumps(summary, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M6 — PRODUCTION-WINDOW METOCEAN CHARACTERIZATION",
+        "METOCEAN — PRODUCTION-WINDOW METOCEAN CHARACTERIZATION",
         "=" * 92,
         f"Window: {START} to {END}",
         f"Release location: {RELEASE_LAT:.5f} N, {RELEASE_LON:.5f} E",
@@ -431,7 +431,7 @@ def main():
     for k, p in summary["forcing_files"].items():
         lines.append(f"{k}: {p}")
 
-    txt_path = DIAG / "M6_metocean_summary.txt"
+    txt_path = DIAG / "metocean_summary.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     # Figure
@@ -458,9 +458,9 @@ def main():
 
     plt.tight_layout()
 
-    png = FIGDIR / "M6_metocean_window.png"
-    pdf = FIGDIR / "M6_metocean_window.pdf"
-    svg = FIGDIR / "M6_metocean_window.svg"
+    png = FIGDIR / "metocean_window.png"
+    pdf = FIGDIR / "metocean_window.pdf"
+    svg = FIGDIR / "metocean_window.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
