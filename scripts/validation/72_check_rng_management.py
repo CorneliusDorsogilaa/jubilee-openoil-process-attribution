@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 72: RNG RNG-management audit.
+Script 72: RNG-management validation check.
 
 Purpose
 -------
