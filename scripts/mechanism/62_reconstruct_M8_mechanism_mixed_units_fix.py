@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 62: Reviewer #2 M8 mechanism reconstruction and figure.
+Script 62: MECHANISM mechanism reconstruction and figure.
 
 Purpose
 -------
@@ -26,12 +26,12 @@ Notes
 
 Outputs
 -------
-diagnostics/reviewer2/M8_mechanism_timeseries.csv
-diagnostics/reviewer2/M8_mechanism_summary.txt
-diagnostics/reviewer2/M8_mechanism_summary.json
-M8_C2_C3_mechanism.png
-M8_C2_C3_mechanism.pdf
-M8_C2_C3_mechanism.svg
+diagnostics/validation/weathering_entrainment_mechanism_timeseries.csv
+diagnostics/validation/weathering_entrainment_mechanism_summary.txt
+diagnostics/validation/weathering_entrainment_mechanism_summary.json
+C2_C3_weathering_entrainment_mechanism.png
+C2_C3_weathering_entrainment_mechanism.pdf
+C2_C3_weathering_entrainment_mechanism.svg
 """
 
 from __future__ import annotations
@@ -51,7 +51,7 @@ from opendrift.models.physics_methods import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 PATTERNS = {
@@ -260,7 +260,7 @@ def main():
 
     df = pd.concat(frames, ignore_index=True)
 
-    csv_path = OUTDIR / "M8_mechanism_timeseries.csv"
+    csv_path = OUTDIR / "weathering_entrainment_mechanism_timeseries.csv"
     df.to_csv(csv_path, index=False)
 
     post = df[df["hour"] >= 6].copy()
@@ -315,14 +315,14 @@ def main():
                        c2["archived_surface_to_subsurface_count"]),
     }
 
-    json_path = OUTDIR / "M8_mechanism_summary.json"
+    json_path = OUTDIR / "weathering_entrainment_mechanism_summary.json"
     json_path.write_text(
         json.dumps(summary, indent=2) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M8 — C2/C3 MECHANISM RECONSTRUCTION",
+        "MECHANISM — C2/C3 MECHANISM RECONSTRUCTION",
         "=" * 78,
         f"Generated UTC: {summary['generated_utc']}",
         f"Interfacial tension used: {INTERFACIAL_TENSION_N_M:.9f} N/m",
@@ -361,7 +361,7 @@ def main():
         "  entrainment events because the internal mixing timestep is shorter.",
     ])
 
-    txt_path = OUTDIR / "M8_mechanism_summary.txt"
+    txt_path = OUTDIR / "weathering_entrainment_mechanism_summary.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     fig, axes = plt.subplots(3, 2, figsize=(10.5, 10.0))
@@ -403,9 +403,9 @@ def main():
 
     plt.tight_layout(rect=[0, 0.025, 1, 1])
 
-    png = ROOT / "M8_C2_C3_mechanism.png"
-    pdf = ROOT / "M8_C2_C3_mechanism.pdf"
-    svg = ROOT / "M8_C2_C3_mechanism.svg"
+    png = ROOT / "C2_C3_weathering_entrainment_mechanism.png"
+    pdf = ROOT / "C2_C3_weathering_entrainment_mechanism.pdf"
+    svg = ROOT / "C2_C3_weathering_entrainment_mechanism.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
