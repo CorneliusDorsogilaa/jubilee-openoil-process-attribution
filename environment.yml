@@ -2,14 +2,14 @@ name: jubilee-openoil-g2
 channels:
   - conda-forge
 dependencies:
-  - python>=3.10,<3.13
-  - numpy
-  - pandas
-  - scipy
-  - matplotlib
-  - xarray
-  - netcdf4
-  - h5netcdf
+  - python=3.11
   - pip
   - pip:
       - opendrift==1.14.12
+      - copernicusmarine==2.4.1
+      - cdsapi==0.7.7
+      - xarray==2026.7.0
+      - netCDF4==1.7.4
+      - PyYAML==6.0.2
+      - matplotlib==3.10.6
+      - pytest==8.4.2
