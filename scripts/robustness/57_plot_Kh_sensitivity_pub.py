@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 57: Clean publication-ready Kh sensitivity figure for Reviewer #2.
+Script 57: Publication-ready horizontal-diffusivity sensitivity figure.
 
 Purpose
 -------
