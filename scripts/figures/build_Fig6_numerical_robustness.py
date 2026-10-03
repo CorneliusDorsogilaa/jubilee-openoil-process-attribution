@@ -181,7 +181,7 @@ def find_ensemble_files(N):
     """
     Robust discovery for the particle-count ensemble.
 
-    Earlier runs used several directory / filename conventions, so do not
+    Multiple archived run sets use different directory / filename conventions, so do not
     assume that N is encoded in the filename. Instead:
 
     1. scan all C3-like NetCDF files under outputs/,
