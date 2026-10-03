@@ -32,7 +32,7 @@ Production calculations use `N = 1000`, a 30 min transport timestep, hourly outp
 - `Kh = 100 m² s⁻¹` is authoritative from the executed run configuration and filename/manifest. A queried NetCDF configuration attribute can be absent (`None`) and should not be interpreted as `Kh = 0` or as an unknown production setting.
 - Production particle count is **N = 1000**. The transport-timestep screening campaign was run separately for **C3 at N = 2000** using 5, 10, 15, and 30 min timesteps and three seeds.
 - C0–C3 use a common seed policy and common initialization, but activating additional stochastic processes changes subsequent random-number consumption. Ensemble inference is therefore used instead of assuming process-by-process matched random variates.
-- The M8 mechanism reconstruction contains an explicit elementwise Kelvin-to-Celsius guard because the archived production temperature field contains a mixed-unit final record. The corrected post-release Ohnesorge ratio is approximately **465.8×**, not the obsolete 544× value from the earlier whole-array temperature check.
+- The mechanism reconstruction contains an explicit elementwise Kelvin-to-Celsius guard because the archived production temperature field contains a mixed-unit final record. The post-release Ohnesorge ratio is approximately **465.8×**.
 - OpenOil's NOAA evaporation routine stops further evaporation once the youngest active surface element exceeds 24 h of age. For the 6 h release, cumulative evaporation therefore plateaus after approximately 30 h.
 - Bonny Light is an analogue used for executable OpenOil weathering, not an exact Jubilee crude assay.
 
@@ -79,8 +79,8 @@ python scripts/production/25_run_production_scenarios.py
 ### 20-seed particle-count robustness
 
 ```bash
-python scripts/robustness/70_run_M4_particle_ensemble.py
-python scripts/robustness/71_analyze_M4_particle_convergence.py
+python scripts/robustness/70_run_particle_count_ensemble.py
+python scripts/robustness/71_analyze_particle_count_convergence.py
 ```
 
 ### Horizontal-diffusivity sensitivity
@@ -94,13 +94,13 @@ python scripts/robustness/57_plot_Kh_sensitivity_pub.py
 ### Robust vertical-depth statistics
 
 ```bash
-python scripts/robustness/76_analyze_M9_vertical_depth_percentiles.py
+python scripts/robustness/76_analyze_vertical_depth_percentiles.py
 ```
 
 ### Corrected weathering-to-entrainment mechanism
 
 ```bash
-python scripts/mechanism/62_reconstruct_M8_mechanism_mixed_units_fix.py
+python scripts/mechanism/62_reconstruct_weathering_entrainment_mechanism_mixed_units_fix.py
 ```
 
 The corrected reconstruction gives approximately:
