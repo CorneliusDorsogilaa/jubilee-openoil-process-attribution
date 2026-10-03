@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-85_build_revised_Fig4_C3_fate_evolution.py
+build_Fig4_C3_fate_evolution.py
 
 Rebuild Figure 4 exactly as described in the main manuscript:
 
