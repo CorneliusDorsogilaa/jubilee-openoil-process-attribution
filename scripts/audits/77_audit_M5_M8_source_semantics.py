@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-Script 77: Close Reviewer #2 M5 and the M8 surface-exposure bookkeeping question.
+Script 77: Close RNG and the MECHANISM surface-exposure bookkeeping question.
 
 Purpose
 -------
-This source-code audit answers two reviewer questions using the exact installed
+This source-code audit answers two validation questions using the exact installed
 OpenDrift/OpenOil environment and the authoritative production analysis script.
 
-M5:
+RNG:
     Are stochastic processes driven by one shared NumPy RNG stream or by
     independent per-process RNG objects?
 
-M8 bookkeeping:
+MECHANISM bookkeeping:
     How is f_s computed in the production analysis, and does natural dispersion
     deactivate elements or primarily update mass/state variables?
 
@@ -19,8 +19,8 @@ The script does not rerun trajectories.
 
 Outputs
 -------
-diagnostics/reviewer2/M5_M8_source_semantics_audit.txt
-diagnostics/reviewer2/M5_M8_source_semantics_audit.json
+diagnostics/validation/source_semantics_check.txt
+diagnostics/validation/source_semantics_check.json
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ from pathlib import Path
 from opendrift.models.openoil import OpenOil
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTDIR = ROOT / "diagnostics" / "reviewer2"
+OUTDIR = ROOT / "diagnostics" / "validation"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 SCRIPT25 = ROOT / "scripts" / "25_run_production_scenarios.py"
@@ -251,19 +251,19 @@ def main():
         "package_wide_bookkeeping_hits": pkg_book_hits,
     }
 
-    json_path = OUTDIR / "M5_M8_source_semantics_audit.json"
+    json_path = OUTDIR / "source_semantics_check.json"
     json_path.write_text(
         json.dumps(bundle, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M5 + M8 — SOURCE SEMANTICS AUDIT",
+        "RNG + source semantics — SOURCE SEMANTICS CHECK",
         "=" * 96,
         f"Generated UTC: {generated}",
         f"OpenDrift version: {od_version}",
         "",
-        "M5 — RNG MANAGEMENT",
+        "RNG — RNG MANAGEMENT",
         "-" * 96,
         f"Obvious separate Generator/RandomState object detected: {has_generator_object}",
         "",
@@ -297,7 +297,7 @@ def main():
 
     lines.extend([
         "",
-        "M8 — PRODUCTION f_s CALCULATION",
+        "MECHANISM — PRODUCTION f_s CALCULATION",
         "-" * 96,
     ])
 
@@ -309,7 +309,7 @@ def main():
 
     lines.extend([
         "",
-        "M8 — OPENOIL BOOKKEEPING / DEACTIVATION SOURCE HITS",
+        "MECHANISM — OPENOIL BOOKKEEPING / DEACTIVATION SOURCE HITS",
         "-" * 96,
     ])
 
@@ -334,20 +334,20 @@ def main():
         "",
         "INTERPRETATION CHECKLIST",
         "-" * 96,
-        "M5:",
+        "RNG:",
         "  If process methods call np.random.* and no independent Generator objects",
         "  are present, the processes share NumPy's global RNG stream. Enabling an",
         "  additional stochastic process changes subsequent draws, so the same master",
         "  seed does not guarantee process-by-process matched random variates.",
         "",
-        "M8:",
+        "MECHANISM:",
         "  Use the extract_metrics source above to state exactly what enters the f_s",
         "  numerator and denominator. Use the OpenOil source hits to determine whether",
         "  natural dispersion deactivates elements or updates mass/state while the",
         "  trajectory remains active.",
     ])
 
-    txt_path = OUTDIR / "M5_M8_source_semantics_audit.txt"
+    txt_path = OUTDIR / "source_semantics_check.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("\n".join(lines[:220]))
