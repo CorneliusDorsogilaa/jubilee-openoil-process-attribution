@@ -105,8 +105,8 @@ def verify_required() -> None:
 
 def verify_citation() -> None:
     text = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
-    if "version: 1.0.0" not in text:
-        raise SystemExit("CITATION.cff is not frozen at version 1.0.0")
+    if "version: 1.0.1" not in text:
+        raise SystemExit("CITATION.cff is not frozen at version 1.0.1")
 
 
 def verify_figure_inventory() -> None:
