@@ -2,14 +2,14 @@
 """
 77_build_revised_Fig3_vertical_exchange.py
 
-Rebuild revised Figure 3 for the Jubilee OpenOil manuscript.
+Build Figure 3 for the Jubilee OpenOil manuscript.
 
 Creates:
-    Fig3_revised_vertical_timeseries.csv
-    Fig3_revised_vertical_depth_ensemble.csv
-    Fig3_revised_vertical_exchange.pdf
-    Fig3_revised_vertical_exchange.png
-    Fig3_revised_vertical_exchange.svg
+    Fig3_vertical_timeseries.csv
+    Fig3_vertical_depth_ensemble.csv
+    Fig3_vertical_exchange.pdf
+    Fig3_vertical_exchange.png
+    Fig3_vertical_exchange.svg
 
 Panels:
     (a) Cumulative post-release surface exposure, f_s(t)
@@ -23,8 +23,8 @@ NetCDF files:
     C2_Exchange_N1000_dt1800s_Kh100_seed20220901*.nc
     C3_Full_fate_N1000_dt1800s_Kh100_seed20220901*.nc
 
-If diagnostics/reviewer2/M9_vertical_depth_summary.csv exists, panel (d) is
-read directly from that file. Otherwise the verified M9 ensemble values are
+If diagnostics/validation/vertical_depth_summary.csv exists, panel (d) is
+read directly from that file. Otherwise the verified vertical-depth ensemble values are
 used as a fallback.
 """
 
@@ -52,17 +52,17 @@ elif SCRIPT_DIR.name.lower() == "scripts":
 else:
     ROOT = SCRIPT_DIR
 
-OUTDIR = ROOT / "figures_revised"
+OUTDIR = ROOT / "figures"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-CSV_TS_OUT = OUTDIR / "Fig3_revised_vertical_timeseries.csv"
-CSV_ENSEMBLE_OUT = OUTDIR / "Fig3_revised_vertical_depth_ensemble.csv"
+CSV_TS_OUT = OUTDIR / "Fig3_vertical_timeseries.csv"
+CSV_ENSEMBLE_OUT = OUTDIR / "Fig3_vertical_depth_ensemble.csv"
 
-FIG_PDF_OUT = OUTDIR / "Fig3_revised_vertical_exchange.pdf"
-FIG_PNG_OUT = OUTDIR / "Fig3_revised_vertical_exchange.png"
-FIG_SVG_OUT = OUTDIR / "Fig3_revised_vertical_exchange.svg"
+FIG_PDF_OUT = OUTDIR / "Fig3_vertical_exchange.pdf"
+FIG_PNG_OUT = OUTDIR / "Fig3_vertical_exchange.png"
+FIG_SVG_OUT = OUTDIR / "Fig3_vertical_exchange.svg"
 
-M9_SUMMARY = ROOT / "diagnostics" / "reviewer2" / "M9_vertical_depth_summary.csv"
+vertical-depth_SUMMARY = ROOT / "diagnostics" / "validation" / "vertical_depth_summary.csv"
 
 RELEASE_END_H = 6.0
 SURFACE_Z_TOL_M = 1.0e-6
@@ -222,13 +222,13 @@ def compute_timeseries(time_h: np.ndarray, z: np.ndarray, configuration: str):
 
 def load_m9_summary() -> pd.DataFrame:
     """
-    Read the authoritative M9 ensemble summary when available.
+    Read the authoritative vertical-depth ensemble summary when available.
 
     Required metrics:
         trajectory_max_depth_p95_m
         trajectory_max_depth_p99_m
 
-    Falls back to the verified manuscript-analysis values only if the M9 summary
+    Falls back to the verified manuscript-analysis values only if the vertical-depth summary
     CSV is not present.
     """
     wanted = {
@@ -236,8 +236,8 @@ def load_m9_summary() -> pd.DataFrame:
         "trajectory_max_depth_p99_m": "p99",
     }
 
-    if M9_SUMMARY.exists():
-        df = pd.read_csv(M9_SUMMARY)
+    if vertical-depth_SUMMARY.exists():
+        df = pd.read_csv(vertical-depth_SUMMARY)
 
         required = {
             "scenario", "metric", "mean", "ci95_low", "ci95_high"
@@ -245,7 +245,7 @@ def load_m9_summary() -> pd.DataFrame:
         missing = required - set(df.columns)
         if missing:
             raise KeyError(
-                f"M9 summary exists but is missing columns: {sorted(missing)}"
+                f"vertical-depth summary exists but is missing columns: {sorted(missing)}"
             )
 
         df = df[df["metric"].isin(wanted)].copy()
@@ -269,12 +269,12 @@ def load_m9_summary() -> pd.DataFrame:
 
         out["configuration"] = out["configuration"].astype(str)
 
-        print(f"\nPanel (d) data loaded from:\n  {M9_SUMMARY}")
+        print(f"\nPanel (d) data loaded from:\n  {vertical-depth_SUMMARY}")
         return out.sort_values(["configuration", "statistic"]).reset_index(drop=True)
 
     print(
-        "\nWARNING: M9 summary CSV not found. "
-        "Using verified M9 ensemble values embedded in this script."
+        "\nWARNING: vertical-depth summary CSV not found. "
+        "Using verified vertical-depth ensemble values embedded in this script."
     )
 
     return pd.DataFrame({
