@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script 82: Final three-oil M10 sensitivity analysis.
+Script 82: Final three-oil OIL SENSITIVITY sensitivity analysis.
 
 Purpose
 -------
@@ -21,18 +21,18 @@ The script:
 3. Summarizes C2/C3 transport and surface-exposure diagnostics.
 4. Extracts final oil-state diagnostics where present in the NetCDF files.
 5. Produces a compact property table and a two-sided sensitivity table.
-6. Generates an M10 diagnostic figure. This is NOT a manuscript Figure 1.
+6. Generates an OIL SENSITIVITY diagnostic figure. This is NOT a manuscript Figure 1.
 
 Outputs
 -------
-diagnostics/reviewer2/M10_three_oil_properties.csv
-diagnostics/reviewer2/M10_three_oil_metrics.csv
-diagnostics/reviewer2/M10_three_oil_summary.txt
-diagnostics/reviewer2/M10_three_oil_summary.json
+diagnostics/validation/three_oil_properties.csv
+diagnostics/validation/three_oil_metrics.csv
+diagnostics/validation/three_oil_summary.txt
+diagnostics/validation/three_oil_summary.json
 
-figures/M10_three_oil_sensitivity.png
-figures/M10_three_oil_sensitivity.pdf
-figures/M10_three_oil_sensitivity.svg
+figures/three_oil_sensitivity.png
+figures/three_oil_sensitivity.pdf
+figures/three_oil_sensitivity.svg
 """
 
 from __future__ import annotations
@@ -51,7 +51,7 @@ import matplotlib.pyplot as plt
 from opendrift.models.openoil import OpenOil
 
 ROOT = Path(__file__).resolve().parents[1]
-DIAG = ROOT / "diagnostics" / "reviewer2"
+DIAG = ROOT / "diagnostics" / "validation"
 FIGDIR = ROOT / "figures"
 DIAG.mkdir(parents=True, exist_ok=True)
 FIGDIR.mkdir(parents=True, exist_ok=True)
@@ -249,7 +249,7 @@ def main():
         })
 
     prop_df = pd.DataFrame(props)
-    prop_csv = DIAG / "M10_three_oil_properties.csv"
+    prop_csv = DIAG / "three_oil_properties.csv"
     prop_df.to_csv(prop_csv, index=False)
 
     # Scenario metrics.
@@ -324,7 +324,7 @@ def main():
         how="left",
     ).drop(columns=["display_name"])
 
-    metrics_csv = DIAG / "M10_three_oil_metrics.csv"
+    metrics_csv = DIAG / "three_oil_metrics.csv"
     paired_df.to_csv(metrics_csv, index=False)
 
     bundle = {
@@ -339,14 +339,14 @@ def main():
         "paired_C3_minus_C2": paired_df.replace({np.nan: None}).to_dict(orient="records"),
     }
 
-    json_path = DIAG / "M10_three_oil_summary.json"
+    json_path = DIAG / "three_oil_summary.json"
     json_path.write_text(
         json.dumps(bundle, indent=2, default=str) + "\n",
         encoding="utf-8",
     )
 
     lines = [
-        "REVIEWER #2 M10 — FINAL THREE-OIL SENSITIVITY",
+        "OIL SENSITIVITY — FINAL THREE-OIL SENSITIVITY",
         "=" * 104,
         f"Generated UTC: {bundle['generated_utc']}",
         "",
@@ -398,7 +398,7 @@ def main():
         "sensitivity to the selected ADIOS oil-property parameterization.",
     ])
 
-    txt_path = DIAG / "M10_three_oil_summary.txt"
+    txt_path = DIAG / "three_oil_summary.txt"
     txt_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     # Diagnostic figure.
@@ -450,9 +450,9 @@ def main():
 
     plt.tight_layout()
 
-    png = FIGDIR / "M10_three_oil_sensitivity.png"
-    pdf = FIGDIR / "M10_three_oil_sensitivity.pdf"
-    svg = FIGDIR / "M10_three_oil_sensitivity.svg"
+    png = FIGDIR / "three_oil_sensitivity.png"
+    pdf = FIGDIR / "three_oil_sensitivity.pdf"
+    svg = FIGDIR / "three_oil_sensitivity.svg"
 
     plt.savefig(png, dpi=300, bbox_inches="tight")
     plt.savefig(pdf, bbox_inches="tight")
