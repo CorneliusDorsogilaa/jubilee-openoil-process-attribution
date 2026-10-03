@@ -13,10 +13,10 @@ The script exports the complete plotting dataset to CSV before creating the figu
 
 New outputs
 -----------
-figures_revised/Fig4_revised_C3_fate_timeseries.csv
-figures_revised/Fig4_revised_C3_fate_evolution.pdf
-figures_revised/Fig4_revised_C3_fate_evolution.png
-figures_revised/Fig4_revised_C3_fate_evolution.svg
+figures/Fig4_C3_fate_timeseries.csv
+figures/Fig4_C3_fate_evolution.pdf
+figures/Fig4_C3_fate_evolution.png
+figures/Fig4_C3_fate_evolution.svg
 
 Important interpretation
 ------------------------
@@ -47,13 +47,13 @@ elif SCRIPT_DIR.name.lower() == "scripts":
 else:
     ROOT = SCRIPT_DIR
 
-OUTDIR = ROOT / "figures_revised"
+OUTDIR = ROOT / "figures"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-CSV_OUT = OUTDIR / "Fig4_revised_C3_fate_timeseries.csv"
-PDF_OUT = OUTDIR / "Fig4_revised_C3_fate_evolution.pdf"
-PNG_OUT = OUTDIR / "Fig4_revised_C3_fate_evolution.png"
-SVG_OUT = OUTDIR / "Fig4_revised_C3_fate_evolution.svg"
+CSV_OUT = OUTDIR / "Fig4_C3_fate_timeseries.csv"
+PDF_OUT = OUTDIR / "Fig4_C3_fate_evolution.pdf"
+PNG_OUT = OUTDIR / "Fig4_C3_fate_evolution.png"
+SVG_OUT = OUTDIR / "Fig4_C3_fate_evolution.svg"
 
 RELEASE_END_H = 6.0
 
@@ -76,7 +76,7 @@ def find_c3_production_file() -> Path:
 
     Preference order:
     1. outputs/production/
-    2. any other project location, excluding reviewer ensemble folders
+    2. any other project location, excluding ensemble folders
     """
     pattern = "C3_Full_fate_N1000_dt1800s_Kh100_seed20220901*.nc"
 
@@ -89,7 +89,7 @@ def find_c3_production_file() -> Path:
     matches = [
         p for p in matches
         if p.is_file()
-        and "reviewer_seed_ensemble" not in str(p)
+        and "seed_ensemble" not in str(p)
         and "particle_convergence" not in str(p)
     ]
 
