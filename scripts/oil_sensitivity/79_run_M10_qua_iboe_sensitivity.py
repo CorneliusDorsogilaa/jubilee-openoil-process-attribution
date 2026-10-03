@@ -62,7 +62,7 @@ src = src.replace("cabinda", "qua_iboe")
 PATCHED.write_text(src, encoding="utf-8")
 
 print("=" * 88)
-print("REVIEWER #2 M10 — LIGHTER-OIL SENSITIVITY RUN")
+print("OIL SENSITIVITY — LIGHTER-OIL SENSITIVITY RUN")
 print("=" * 88)
 print("Validated source workflow :", SOURCE.relative_to(ROOT))
 print("Generated patched workflow:", PATCHED.relative_to(ROOT))
